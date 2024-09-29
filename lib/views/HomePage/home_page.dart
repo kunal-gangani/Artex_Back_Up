@@ -28,9 +28,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 2,
         backgroundColor: Colors.blue.shade200,
-        title: const Text(
+        title: Text(
           "Welcome Art Aficionado",
+          style: TextStyle(
+            fontSize: 20.sp,
+          ),
         ),
         actions: [
           IconButton(
@@ -123,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 3,
+                  itemCount: 5,
                   itemBuilder: (
                     context,
                     index,
@@ -155,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 3,
+                  itemCount: 5,
                   itemBuilder: (
                     context,
                     index,
@@ -187,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 3,
+                  itemCount: 5,
                   itemBuilder: (
                     context,
                     index,
@@ -248,11 +252,11 @@ class _HomePageState extends State<HomePage> {
             ),
             SalomonBottomBarItem(
               icon: const Icon(
-                Icons.search,
+                Icons.summarize,
               ),
               selectedColor: Colors.green,
               title: Text(
-                "Search",
+                "Bid Summary",
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,

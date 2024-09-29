@@ -18,63 +18,123 @@ class _BiddingPageState extends State<BiddingPage> {
 
   // Function to handle bidding logic
   void placeBid() {
-    canSave = true;
-    setState(() {
-      userBid = int.tryParse(bidController.text) ?? 0;
-      if (userBid > currentHighestBid) {
-        currentHighestBid =
-            userBid; // Updates the  highest bid if user bid is higher
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              backgroundColor: Colors.green.shade50,
-              title: const Text(
-                "Success",
+    if (bidController.text.isEmpty) {
+      // Show an error message if the bid amount is empty
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.red.shade50,
+            title: const Text(
+              "Error",
+            ),
+            content: const Text(
+              "Please enter a bid amount before submitting.",
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
               ),
-              content: Text(
-                "Your bid of ₹$userBid has been placed!",
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Flexify.back();
-                  },
-                  child: const Text(
-                    "OK",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "OK",
+                  style: TextStyle(
+                    color: Colors.black87,
                   ),
                 ),
-              ],
-            );
-          },
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              backgroundColor: Colors.red.shade50,
-              title: const Text(
-                "Warning",
               ),
-              content: Text(
-                "This lot already has ₹$currentHighestBid amount bidded on it.Try another larger amount to win this.",
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Flexify.back();
-                  },
-                  child: const Text(
-                    "OK",
-                  ),
+            ],
+          );
+        },
+      );
+    } else {
+      setState(() {
+        canSave = true;
+        userBid = int.tryParse(bidController.text) ?? 0;
+
+        if (userBid > currentHighestBid) {
+          currentHighestBid = userBid;
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: Colors.green.shade50,
+                title: const Text(
+                  "Success",
                 ),
-              ],
-            );
-          },
-        );
-      }
-    });
+                content: Text(
+                  "Your bid of ₹$userBid has been placed!",
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Flexify.back();
+                    },
+                    child: const Text(
+                      "OK",
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        } else if (userBid == currentHighestBid) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: Colors.yellow.shade50,
+                title: const Text(
+                  "SAME BID AMOUNT",
+                ),
+                content: Text(
+                  "Your bid of ₹$userBid is equal to the current highest bid. Try bidding a higher amount to win this lot.",
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Flexify.back();
+                    },
+                    child: const Text(
+                      "OK",
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: Colors.red.shade50,
+                title: const Text(
+                  "Warning",
+                ),
+                content: Text(
+                  "This lot already has ₹$currentHighestBid amount bidded on it. Try another larger amount to win this.",
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Flexify.back();
+                    },
+                    child: const Text(
+                      "OK",
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      });
+    }
   }
 
   @override
@@ -86,18 +146,19 @@ class _BiddingPageState extends State<BiddingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text(
           'Place Your Bid',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
           ),
         ),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.blue.shade200,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white,
+            color: Colors.black87,
           ),
           onPressed: () {
             Flexify.back();
@@ -135,18 +196,42 @@ class _BiddingPageState extends State<BiddingPage> {
           ),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+        // Wrap the body in a SingleChildScrollView
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Art Image (Consistent with Detail Page)
+            Container(
+              height: 250.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: const DecorationImage(
+                  image: AssetImage('assets/Famous/Image4.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
             // Current Highest Bid Display
             Text(
-              "Current Highest Bid: ₹$currentHighestBid",
+              "Current Highest Bid:",
               style: TextStyle(
                 fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: Colors.black, // Highlight the label
+              ),
+            ),
+            Text(
+              "₹$currentHighestBid",
+              style: TextStyle(
+                fontSize: 24.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
               ),
             ),
             SizedBox(
@@ -156,7 +241,8 @@ class _BiddingPageState extends State<BiddingPage> {
               "Enter Your Bid:",
               style: TextStyle(
                 fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.bold,
+                color: Colors.black, // Consistent label color
               ),
             ),
             SizedBox(
@@ -166,6 +252,8 @@ class _BiddingPageState extends State<BiddingPage> {
               controller: bidController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white70,
                 hintText: "Enter bid amount",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -182,11 +270,11 @@ class _BiddingPageState extends State<BiddingPage> {
             Center(
               child: SizedBox(
                 width: double.infinity,
-                height: 50.h,
+                height: 60.h,
                 child: ElevatedButton(
                   onPressed: placeBid,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.greenAccent.shade400,
+                    backgroundColor: Colors.blue.shade400,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -194,16 +282,17 @@ class _BiddingPageState extends State<BiddingPage> {
                   child: Text(
                     "Submit My Bid",
                     style: TextStyle(
-                      fontSize: 18.sp,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
             ),
+
             SizedBox(
-              height: 5.h,
+              height: 20.h,
             ),
           ],
         ),

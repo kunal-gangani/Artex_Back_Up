@@ -14,6 +14,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black.withOpacity(0.6),
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -21,87 +22,157 @@ class _DetailPageState extends State<DetailPage> {
           },
           icon: const Icon(
             Icons.arrow_back_ios,
+            color: Colors.black87,
           ),
         ),
         backgroundColor: Colors.blue.shade200,
-        title: const Text(
+        title: Text(
           "Mona Lisa",
+          style: TextStyle(
+            fontSize: 22.sp,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
+        centerTitle: true,
+        elevation: 0,
       ),
-      body: Stack(
+      body: Column(
         children: [
+          // Container for details
           Container(
-            height: double.infinity,
+            height: 600.h,
             width: double.infinity,
-            color: const Color(0xff654321),
+            padding: EdgeInsets.all(20.w),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(),
+                // Art Image Container
+                Container(
+                  height: 250.h,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: const DecorationImage(
+                      image: AssetImage(
+                        'assets/Famous/Image4.jpg',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                // Art Name and Painter
                 Expanded(
-                  flex: 3,
-                  child: Container(
-                    color: Colors.white,
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(
-                      10,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Art Name",
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Art Name: ",
+                              style: TextStyle(
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.lightBlueAccent,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "Mona Lisa", // Value text
+                              style: TextStyle(
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white, // Value color
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Painter: ",
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.lightBlueAccent,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "Leonardo da Vinci", // Value text
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white70, // Value color
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "Painter Name",
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                          ),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ), // Adjusted height
+                      // Art Description
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Description: ",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.lightBlueAccent,
+                              ),
+                            ),
+                            TextSpan(
+                              text:
+                                  "The Mona Lisa is one of the most recognizable and acclaimed paintings in the world. It was created by Leonardo da Vinci during the Italian Renaissance period.",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.white70, // Value color
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      // Minimum Bid Amount
+                      Text(
+                        "Minimum Bid: ₹15,000",
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.lightBlueAccent,
                         ),
-                        Text(
-                          "Small description",
-                          style: TextStyle(
-                            fontSize: 17.sp,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "Minimum Bid : ₹15,000",
-                          style: TextStyle(
-                            fontSize: 17.sp,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-          Positioned(
-            bottom: 20.h,
-            left: 20.w,
-            right: 20.w,
+          // BID Button at the bottom
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.w,
+            ),
             child: SizedBox(
               width: double.infinity,
-              height: 50.h,
+              height: 60.h,
               child: ElevatedButton(
                 onPressed: () {
-                  // Action when the BID button is clicked
+                  // Navigate to BiddingPage with animation
                   Flexify.go(
                     const BiddingPage(),
                     animation: FlexifyRouteAnimations.blur,
@@ -109,15 +180,15 @@ class _DetailPageState extends State<DetailPage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
+                  backgroundColor: Colors.blue.shade400,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
                 child: Text(
-                  "BID",
+                  "PLACE YOUR BID",
                   style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
