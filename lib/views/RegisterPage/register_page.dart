@@ -1,9 +1,11 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:minor_project/helper/auth_helper.dart';
+import 'package:minor_project/model/user_data_model.dart';
+import 'package:minor_project/views/HomePage/home_page.dart';
 import 'package:minor_project/views/LoginPage/login_page.dart';
 import 'package:minor_project/views/OTPVerificationPage/otp_verification_page.dart';
-
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -234,14 +236,29 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 32.h,
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState?.validate() == true) {
-                              // Register action if the form is valid
-                              Flexify.goRemove(
-                                const OTPVerificationPage(),
-                                animation: FlexifyRouteAnimations.blur,
-                                duration: Durations.medium1,
+                              UserDataModel userData = UserDataModel(
+                                name: _nameController.text,
+                                phoneNumber: _phoneController.text,
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text.trim(),
+                                conformPassword:
+                                    _confirmPasswordController.text.trim(),
                               );
+
+                              await AuthHelper.authHelper
+                                  .signUp(
+                                userDataModel: userData,
+                              )
+                                  .then((value) {
+                                // Register action if the form is valid
+                                Flexify.goRemove(
+                                  const HomePage(),
+                                  animation: FlexifyRouteAnimations.blur,
+                                  duration: Durations.medium1,
+                                );
+                              });
                             }
                           },
                           style: ElevatedButton.styleFrom(

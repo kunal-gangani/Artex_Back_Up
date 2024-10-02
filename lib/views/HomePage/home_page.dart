@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
               );
             },
             icon: Icon(
-              Icons.notifications_none_outlined,
+              Icons.favorite_border_outlined,
               size: 32.w,
             ),
           ),

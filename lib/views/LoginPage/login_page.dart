@@ -1,6 +1,7 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:minor_project/helper/auth_helper.dart';
 import 'package:minor_project/views/HomePage/home_page.dart';
 import 'package:minor_project/views/RegisterPage/register_page.dart';
 
@@ -38,22 +39,39 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   // Method to handle login action
-  void _handleLogin() {
+  void _handleLogin() async {
     if (_formKey.currentState?.validate() == true) {
-      // Add your login logic here (e.g., API call)
-      Flexify.goRemove(
-        const HomePage(),
-        animation: FlexifyRouteAnimations.blur,
-        duration: Durations.medium1,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.green,
-          content: Text(
-            'Login Successful!',
-          ),
-        ),
-      );
+      await AuthHelper.authHelper
+          .signIn(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      )
+          .then((value) {
+        if (value != null) {
+          Flexify.goRemove(
+            const HomePage(),
+            animation: FlexifyRouteAnimations.blur,
+            duration: Durations.medium1,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text(
+                'Login Successful!',
+              ),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(
+                'Login Failed!',
+              ),
+            ),
+          );
+        }
+      });
     }
   }
 
