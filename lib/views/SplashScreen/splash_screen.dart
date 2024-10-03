@@ -69,10 +69,14 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: 225.h,
             ),
-            LinearProgressIndicator(
-              backgroundColor: Colors.white,
-              value: progressValue, // Set progress value here
-              valueColor: const AlwaysStoppedAnimation<Color>(Colors.black),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: LinearProgressIndicator(
+                borderRadius: BorderRadius.circular(20),
+                backgroundColor: Colors.white,
+                value: progressValue, // Set progress value here
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.black),
+              ),
             ),
           ],
         ),

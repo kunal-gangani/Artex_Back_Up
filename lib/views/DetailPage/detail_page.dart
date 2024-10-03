@@ -21,17 +21,16 @@ class _DetailPageState extends State<DetailPage> {
             Flexify.back();
           },
           icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black87,
+            Icons.arrow_back_ios_new,
           ),
         ),
-        backgroundColor: Colors.blue.shade200,
+        backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
         title: Text(
           "Mona Lisa",
           style: TextStyle(
             fontSize: 22.sp,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
           ),
         ),
         centerTitle: true,
@@ -119,7 +118,7 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                       SizedBox(
                         height: 8.h,
-                      ), // Adjusted height
+                      ),
                       // Art Description
                       RichText(
                         text: TextSpan(
@@ -137,7 +136,7 @@ class _DetailPageState extends State<DetailPage> {
                                   "The Mona Lisa is one of the most recognizable and acclaimed paintings in the world. It was created by Leonardo da Vinci during the Italian Renaissance period.",
                               style: TextStyle(
                                 fontSize: 16.sp,
-                                color: Colors.white70, // Value color
+                                color: Colors.white70,
                                 height: 1.5,
                               ),
                             ),
@@ -149,7 +148,7 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                       // Minimum Bid Amount
                       Text(
-                        "Minimum Bid: ₹15,000",
+                        "Minimum Bid: \$15,000",
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,

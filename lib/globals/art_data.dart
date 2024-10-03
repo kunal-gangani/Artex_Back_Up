@@ -10,8 +10,8 @@ List<Map<String, dynamic>> artFamousList = [
     "painter": "Johannes Vermeer",
     "origin": "Netherlands",
     "description": "Young girl in the painting gazes over her shoulder.",
-    "minBidPrice": 25000.00,
-    "currentBidPrice": 1000.00,
+    "minBidPrice": 25000,
+    "currentBidPrice": 25000,
     "reviews": [
       {
         "reviewId": 1,
@@ -35,8 +35,8 @@ List<Map<String, dynamic>> artFamousList = [
     "origin": "France",
     "description":
         "Captures a dramatic night sky swirling with vibrant blues, yellows, and white tones.",
-    "minBidPrice": 31000.00,
-    "currentBidPrice": 1500.00,
+    "minBidPrice": 31000,
+    "currentBidPrice": 31000,
     "reviews": [
       {
         "reviewId": 3,
@@ -60,8 +60,8 @@ List<Map<String, dynamic>> artFamousList = [
     "origin": "Czech Republic",
     "description":
         "An enclosed or semi-enclosed open space surrounded by buildings.",
-    "minBidPrice": 20400.00,
-    "currentBidPrice": 1600.00,
+    "minBidPrice": 20400,
+    "currentBidPrice": 20400,
     "reviews": [
       {
         "reviewId": 5,
@@ -78,8 +78,8 @@ List<Map<String, dynamic>> artFamousList = [
     "painter": "Leonardo Da Vinci",
     "origin": "Paris",
     "description": "A woman with an enigmatic expression.",
-    "minBidPrice": 50000.00,
-    "currentBidPrice": 2500.00,
+    "minBidPrice": 50000,
+    "currentBidPrice": 50000,
     "reviews": [
       {
         "reviewId": 6,
@@ -97,8 +97,8 @@ List<Map<String, dynamic>> artFamousList = [
     "painter": "Arnold Böcklin",
     "origin": "Australia",
     "description": "Death is often depicted as a skeletal figure.",
-    "minBidPrice": 45000.00,
-    "currentBidPrice": 1750.00,
+    "minBidPrice": 45000,
+    "currentBidPrice": 45000,
     "reviews": [
       {
         "reviewId": 8,
@@ -110,7 +110,7 @@ List<Map<String, dynamic>> artFamousList = [
   },
 ];
 
-List famous = artFamousList
+List<FamousDataModel> famous = artFamousList
     .map(
       (e) => FamousDataModel.fun(
         data: e,
@@ -126,8 +126,8 @@ List<Map<String, dynamic>> artHotsList = [
     "painter": "Claude Monet ",
     "origin": "Paris",
     "description": "A misty harbor at sunrise in the port of Le Havre.",
-    "minBidPrice": 13500.00,
-    "currentBidPrice": 500.00,
+    "minBidPrice": 13500,
+    "currentBidPrice": 13500,
     "reviews": [
       {
         "reviewId": 9,
@@ -145,8 +145,8 @@ List<Map<String, dynamic>> artHotsList = [
     "origin": "Norway",
     "description":
         "A distorted, androgynous figure standing on a bridge, clutching its head with both hands.",
-    "minBidPrice": 27700.00,
-    "currentBidPrice": 1950.00,
+    "minBidPrice": 27700,
+    "currentBidPrice": 27700,
     "reviews": [
       {
         "reviewId": 10,
@@ -162,9 +162,10 @@ List<Map<String, dynamic>> artHotsList = [
     "imageUrl": "assets/Hots/Image3.jpg",
     "painter": "Margaretha Roosenboom",
     "origin": "Dutch",
-    "description": "White roses are characterized by their delicate beauty and realism.",
-    "minBidPrice": 26000.00,
-    "currentBidPrice": 1800.00,
+    "description":
+        "White roses are characterized by their delicate beauty and realism.",
+    "minBidPrice": 26000,
+    "currentBidPrice": 26000,
     "reviews": [
       {
         "reviewId": 11,
@@ -181,8 +182,8 @@ List<Map<String, dynamic>> artHotsList = [
     "painter": "Ahmed Ali",
     "origin": "Egypt",
     "description": "A hot desert scene with a distant mirage on the horizon.",
-    "minBidPrice": 300.00,
-    "currentBidPrice": 400.00,
+    "minBidPrice": 13000,
+    "currentBidPrice": 13000,
     "reviews": [
       {
         "reviewId": 12,
@@ -198,9 +199,10 @@ List<Map<String, dynamic>> artHotsList = [
     "imageUrl": "assets/Hots/Image5.jpg",
     "painter": "Alireza",
     "origin": "Japan",
-    "description": "A typical scene of dawn by the seaside captures the soft, early light of the morning.",
-    "minBidPrice": 15000.00,
-    "currentBidPrice": 1700.00,
+    "description":
+        "A typical scene of dawn by the seaside captures the soft, early light of the morning.",
+    "minBidPrice": 15000,
+    "currentBidPrice": 15000,
     "reviews": [
       {
         "reviewId": 13,
@@ -228,8 +230,8 @@ List<Map<String, dynamic>> artHouseHoldsList = [
     "painter": "Anya Petrova",
     "origin": "Russia",
     "description": "A solitary figure reflecting by a cat.",
-    "minBidPrice": 1400.00,
-    "currentBidPrice": 50.00,
+    "minBidPrice": 1400,
+    "currentBidPrice": 1400,
     "reviews": [
       {
         "reviewId": 14,
@@ -245,10 +247,9 @@ List<Map<String, dynamic>> artHouseHoldsList = [
     "imageUrl": "assets/HouseHolds/Image2.jpg",
     "painter": "Lars Bjornson",
     "origin": "Norway",
-    "description":
-        "Highlight the graceful curves and forms of a woman's body",
-    "minBidPrice": 1900.00,
-    "currentBidPrice": 300.00,
+    "description": "Highlight the graceful curves and forms of a woman's body",
+    "minBidPrice": 1900,
+    "currentBidPrice": 1900,
     "reviews": [
       {
         "reviewId": 15,
@@ -265,8 +266,8 @@ List<Map<String, dynamic>> artHouseHoldsList = [
     "painter": "Marie Dubois",
     "origin": "France",
     "description": "A peaceful summer picnic in a lush garden.",
-    "minBidPrice": 600.00,
-    "currentBidPrice": 800.00,
+    "minBidPrice": 600,
+    "currentBidPrice": 600,
     "reviews": [
       {
         "reviewId": 16,
@@ -283,8 +284,8 @@ List<Map<String, dynamic>> artHouseHoldsList = [
     "painter": "Rajesh Gupta",
     "origin": "India",
     "description": "Morning sunlight filtering through the dense forest.",
-    "minBidPrice": 400.00,
-    "currentBidPrice": 600.00,
+    "minBidPrice": 400,
+    "currentBidPrice": 400,
     "reviews": [
       {
         "reviewId": 17,
@@ -302,8 +303,8 @@ List<Map<String, dynamic>> artHouseHoldsList = [
     "origin": "China",
     "description":
         "A starry night sky full of bright stars and a clear moonlight.",
-    "minBidPrice": 550.00,
-    "currentBidPrice": 700.00,
+    "minBidPrice": 550,
+    "currentBidPrice": 550,
     "reviews": [
       {
         "reviewId": 18,

@@ -1,6 +1,7 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:minor_project/globals/bids_placed_list.dart';
 import 'package:minor_project/globals/variables.dart';
 import 'package:minor_project/views/HomePage/home_page.dart';
 
@@ -53,11 +54,13 @@ class _BiddingPageState extends State<BiddingPage> {
       );
     } else {
       setState(() {
-        canSave = true;
         userBid = int.tryParse(bidController.text) ?? 0;
 
         if (userBid > currentHighestBid) {
+          // Successful bid
           currentHighestBid = userBid;
+          canSave = true; // Show save button
+
           showDialog(
             context: context,
             builder: (context) {
@@ -82,6 +85,7 @@ class _BiddingPageState extends State<BiddingPage> {
               );
             },
           );
+          bidsPlacedList.add(userBid);
         } else if (userBid == currentHighestBid) {
           showDialog(
             context: context,
@@ -107,6 +111,7 @@ class _BiddingPageState extends State<BiddingPage> {
               );
             },
           );
+          canSave = false; // Hide save button
         } else {
           showDialog(
             context: context,
@@ -132,6 +137,7 @@ class _BiddingPageState extends State<BiddingPage> {
               );
             },
           );
+          canSave = false; // Hide save button
         }
       });
     }
@@ -150,15 +156,12 @@ class _BiddingPageState extends State<BiddingPage> {
       appBar: AppBar(
         title: const Text(
           'Place Your Bid',
-          style: TextStyle(
-            color: Colors.black87,
-          ),
         ),
-        backgroundColor: Colors.blue.shade200,
+        backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black87,
+            Icons.arrow_back_ios_new,
           ),
           onPressed: () {
             Flexify.back();
@@ -197,8 +200,10 @@ class _BiddingPageState extends State<BiddingPage> {
         ],
       ),
       body: SingleChildScrollView(
-        // Wrap the body in a SingleChildScrollView
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.w,
+          vertical: 20.h,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -209,7 +214,9 @@ class _BiddingPageState extends State<BiddingPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: const DecorationImage(
-                  image: AssetImage('assets/Famous/Image4.jpg'),
+                  image: AssetImage(
+                    'assets/Famous/Image4.jpg',
+                  ),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -223,11 +230,11 @@ class _BiddingPageState extends State<BiddingPage> {
               style: TextStyle(
                 fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
-                color: Colors.black, // Highlight the label
+                color: Colors.black,
               ),
             ),
             Text(
-              "₹$currentHighestBid",
+              "\$$currentHighestBid",
               style: TextStyle(
                 fontSize: 24.sp,
                 fontWeight: FontWeight.bold,
@@ -242,7 +249,7 @@ class _BiddingPageState extends State<BiddingPage> {
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
-                color: Colors.black, // Consistent label color
+                color: Colors.black,
               ),
             ),
             SizedBox(

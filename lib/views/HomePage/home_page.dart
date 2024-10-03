@@ -1,9 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:minor_project/globals/art_data.dart';
+import 'package:minor_project/model/hots_data_model.dart';
+import 'package:minor_project/model/house_holds_data_model.dart';
+import 'package:minor_project/views/BidsPlacedPage/bids_placed.dart';
+import 'package:minor_project/views/FavourtiesPage/favourites_page.dart';
 import 'package:minor_project/views/HomePage/assets/widgets/listview_container.dart';
+import 'package:minor_project/views/ReviewsPage/reviews_page.dart';
+import 'package:minor_project/views/UserProfilePage/user_profile_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:toastification/toastification.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,32 +36,27 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
-        backgroundColor: Colors.blue.shade200,
+        backgroundColor: Colors.blueAccent,
         title: Text(
           "Welcome Art Aficionado",
           style: TextStyle(
             fontSize: 20.sp,
+            color: Colors.white,
           ),
         ),
         actions: [
           IconButton(
             onPressed: () {
-              toastification.show(
-                context: context,
-                type: ToastificationType.success,
-                alignment: Alignment.bottomCenter,
-                style: ToastificationStyle.flatColored,
-                title: const Text(
-                  "Icon Clicked",
-                ),
-                autoCloseDuration: const Duration(
-                  seconds: 3,
-                ),
+              Flexify.go(
+                const FavouritesPage(),
+                animation: FlexifyRouteAnimations.blur,
+                animationDuration: Durations.medium1,
               );
             },
             icon: Icon(
               Icons.favorite_border_outlined,
               size: 32.w,
+              color: Colors.white,
             ),
           ),
           SizedBox(
@@ -70,11 +72,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               CarouselSlider.builder(
                 itemCount: imageList.length,
-                itemBuilder: (
-                  context,
-                  index,
-                  realIndex,
-                ) {
+                itemBuilder: (context, index, realIndex) {
                   return Container(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 5.0,
@@ -96,13 +94,8 @@ class _HomePageState extends State<HomePage> {
                   enlargeCenterPage: true,
                   aspectRatio: 16 / 9,
                   enableInfiniteScroll: true,
-                  autoPlayInterval: const Duration(
-                    seconds: 3,
-                  ),
-                  onPageChanged: (
-                    index,
-                    reason,
-                  ) {
+                  autoPlayInterval: const Duration(seconds: 3),
+                  onPageChanged: (index, reason) {
                     setState(() {
                       _currentCarouselIndex = index;
                     });
@@ -127,16 +120,11 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (
-                    context,
-                    index,
-                  ) {
-                    return listViewContainer(
-                      thumbnail:
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbYjCfxjyOC3ePDsItz5mlGbKr0ipQjsNRyA&s",
-                      painting: "Mona Lisa",
-                      price: 18000,
+                  itemCount: artHotsList.length,
+                  itemBuilder: (context, index) {
+                    HotsDataModel item = hots[index];
+                    return hotListViewContainer(
+                      e: item,
                     );
                   },
                 ),
@@ -159,16 +147,11 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (
-                    context,
-                    index,
-                  ) {
-                    return listViewContainer(
-                      thumbnail:
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGOHLRlRzuXt7BYpRy1gcTKy5iUyl-Bbjs1A&s",
-                      painting: "Lona Misa",
-                      price: 25000,
+                  itemCount: artFamousList.length,
+                  itemBuilder: (context, index) {
+                    final item = famous[index];
+                    return famousListViewContainer(
+                      e: item,
                     );
                   },
                 ),
@@ -191,22 +174,66 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 5,
+                  itemCount: artHouseHoldsList.length,
                   itemBuilder: (
                     context,
                     index,
                   ) {
-                    return listViewContainer(
-                      thumbnail:
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3MYztg-t9zowtUIGHSFYfKCejH1Khae_Zaw&s",
-                      painting: "Lonawala",
-                      price: 30000,
+                    HouseHoldsDataModel item = households[index];
+                    return houseListViewContainer(
+                      e: item,
                     );
                   },
                 ),
               ),
               SizedBox(
                 height: 20.h,
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Flexify.go(
+                        const BidsPlacedPage(),
+                        animation: FlexifyRouteAnimations.blur,
+                        animationDuration: Durations.medium1,
+                      );
+                    },
+                    child: const Text(
+                      "Button",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Flexify.go(
+                        const ReviewsPage(),
+                        animation: FlexifyRouteAnimations.blur,
+                        animationDuration: Durations.medium1,
+                      );
+                    },
+                    child: const Text(
+                      "Button",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Flexify.go(
+                        const UserProfilePage(),
+                        animation: FlexifyRouteAnimations.blur,
+                        animationDuration: Durations.medium1,
+                      );
+                    },
+                    child: const Text(
+                      "Button",
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -217,15 +244,10 @@ class _HomePageState extends State<HomePage> {
           color: Colors.lightBlue[50],
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(
-                0.2,
-              ),
+              color: Colors.grey.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: const Offset(
-                0,
-                3,
-              ),
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -252,11 +274,11 @@ class _HomePageState extends State<HomePage> {
             ),
             SalomonBottomBarItem(
               icon: const Icon(
-                Icons.summarize,
+                Icons.gavel,
               ),
               selectedColor: Colors.green,
               title: Text(
-                "Bid Summary",
+                "Bids",
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -266,10 +288,10 @@ class _HomePageState extends State<HomePage> {
             SalomonBottomBarItem(
               selectedColor: Colors.red,
               icon: const Icon(
-                Icons.gavel,
+                Icons.reviews,
               ),
               title: Text(
-                "Bids",
+                "Insights",
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,

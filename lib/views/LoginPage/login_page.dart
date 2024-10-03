@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:minor_project/helper/auth_helper.dart';
 import 'package:minor_project/views/HomePage/home_page.dart';
+import 'package:minor_project/views/OTPVerificationPage/otp_verification_page.dart';
 import 'package:minor_project/views/RegisterPage/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>(); // Form key for validation
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   bool _isPasswordVisible = false; // Password visibility toggle
 
   // Email validation logic
@@ -38,6 +40,17 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
+  // Phone number validation logic
+  String? _validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Phone number is required';
+    } else if (value.length < 10) {
+      // Assuming a minimum length for phone numbers
+      return 'Enter a valid phone number';
+    }
+    return null;
+  }
+
   // Method to handle login action
   void _handleLogin() async {
     if (_formKey.currentState?.validate() == true) {
@@ -49,7 +62,10 @@ class _LoginPageState extends State<LoginPage> {
           .then((value) {
         if (value != null) {
           Flexify.goRemove(
-            const HomePage(),
+            OTPVerificationPage(
+              phoneNumber: _phoneController.text,
+              countryCode: "91",
+            ),
             animation: FlexifyRouteAnimations.blur,
             duration: Durations.medium1,
           );
@@ -143,12 +159,31 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20.h,
                         ),
                         TextFormField(
+                          controller:
+                              _phoneController, // Phone number input field
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            labelText: 'Phone Number',
+                            prefixIcon: const Icon(Icons.phone),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                          validator: _validatePhone, // Phone number validation
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        TextFormField(
                           controller: _passwordController,
                           textInputAction: TextInputAction.done,
                           obscureText: !_isPasswordVisible,
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            prefixIcon: const Icon(Icons.lock),
+                            prefixIcon: const Icon(
+                              Icons.lock,
+                            ),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _isPasswordVisible
@@ -167,7 +202,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: _validatePassword,
                         ),
-                        SizedBox(height: 30.h),
+                        SizedBox(
+                          height: 30.h,
+                        ),
                         ElevatedButton(
                           onPressed: _handleLogin,
                           style: ElevatedButton.styleFrom(
@@ -182,11 +219,11 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Login',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 18.sp,
                             ),
                           ),
                         ),
@@ -204,10 +241,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             TextButton(
                               onPressed: () {
-                                Flexify.go(
+                                Flexify.goRemoveAll(
                                   const RegisterPage(),
                                   animation: FlexifyRouteAnimations.blur,
-                                  animationDuration: Durations.medium1,
+                                  duration: Durations.medium1,
                                 );
                               },
                               child: const Text(
