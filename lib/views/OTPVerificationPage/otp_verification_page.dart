@@ -22,25 +22,46 @@ class OTPVerificationPage extends StatefulWidget {
 class _OTPVerificationPageState extends State<OTPVerificationPage> {
   final TextEditingController _otpController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();String otp = "";
 
   // Method to validate OTP
-  void _verifyOTP() {
+  void _verifyOTP() async{
     if (_formKey.currentState?.validate() == true) {
       // Here, you can use widget.phoneNumber and widget.countryCode as needed
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+      Map<String, dynamic> res =
+          await AuthHelper.authHelper.checkMyOTP(otp: otp);
+
+      if (res['user'] != null) {
+        SnackBar snackBar = const SnackBar(
+          content: Text("Otp Verification Successfully"),
           backgroundColor: Colors.green,
-          content: Text(
-            'OTP Verified!',
-          ),
-        ),
-      );
-      Flexify.goRemove(
-        const HomePage(),
-        animation: FlexifyRouteAnimations.blur,
-        duration: Durations.medium1,
-      );
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Flexify.goRemove(
+          const HomePage(),
+          animation: FlexifyRouteAnimations.blur,
+          duration: Durations.medium1,
+        );
+      }
+
+      if (res['error'] != null) {
+        SnackBar snackBar = const SnackBar(
+          content: Text("Otp Verification Unsuccessfully"),
+          backgroundColor: Colors.red,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     backgroundColor: Colors.green,
+      //     content: Text(
+      //       'OTP Verified!',
+      //     ),
+      //   ),
+      // );
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -115,10 +136,14 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                     return null;
                   },
                   showCursor: true,
-                  onCompleted: (otp) => _verifyOTP(),
+                  // onCompleted: (otp) => _verifyOTP(),
                   pinAnimationType: PinAnimationType.fade,
                   onChanged: (value) {
                     // Handle OTP change if needed
+                    otp = value;
+                    setState(() {
+
+                    });
                   },
                   focusedPinTheme: PinTheme(
                     height: 50,

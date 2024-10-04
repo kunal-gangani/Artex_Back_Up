@@ -255,6 +255,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Flexify.goRemove(
                                   OTPVerificationPage(
                                     phoneNumber: _phoneController.text,
+                                    countryCode: "+91",
                                   ),
                                   animation: FlexifyRouteAnimations.blur,
                                   duration: Durations.medium1,

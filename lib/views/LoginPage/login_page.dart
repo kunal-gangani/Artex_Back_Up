@@ -61,31 +61,37 @@ class _LoginPageState extends State<LoginPage> {
       )
           .then((value) {
         if (value != null) {
-          Flexify.goRemove(
-            OTPVerificationPage(
-              phoneNumber: _phoneController.text,
-              countryCode: "91",
-            ),
-            animation: FlexifyRouteAnimations.blur,
-            duration: Durations.medium1,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              backgroundColor: Colors.green,
-              content: Text(
-                'Login Successful!',
+          AuthHelper.authHelper
+              .phoneVerification(phoneNumber: _phoneController.text,)
+              .then((value) {
+            Flexify.goRemove(
+              OTPVerificationPage(
+                phoneNumber: _phoneController.text,
+                countryCode: "+91",
               ),
-            ),
-          );
+              animation: FlexifyRouteAnimations.blur,
+              duration: Durations.medium1,
+            );
+          });
+
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //     backgroundColor: Colors.green,
+          //     content: Text(
+          //       'Login Successful!',
+          //     ),
+          //   ),
+          // );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //     backgroundColor: Colors.red,
+          //     content: Text(
+          //       'Login Failed!',
+          //     ),
+          //   ),
+          // );
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              backgroundColor: Colors.red,
-              content: Text(
-                'Login Failed!',
-              ),
-            ),
-          );
+
         }
       });
     }

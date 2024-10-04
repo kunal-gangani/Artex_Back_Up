@@ -10,6 +10,7 @@ class AuthHelper {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static String verificationMyId = "";
 
   // Todo : signUp Method
 
@@ -53,5 +54,41 @@ class AuthHelper {
       log("ERROR : ${e.code}");
       log("==================");
     }
+  }
+
+  Future<void> phoneVerification({required String phoneNumber}) async {
+    await auth.verifyPhoneNumber(
+      phoneNumber: "+91$phoneNumber",
+      verificationCompleted: (phoneAuthCredential) {},
+      verificationFailed: (FirebaseAuthException error) {
+        if (error.code == "invalid-phone-number") {
+          log("Phone Number is Invalid Please check.....");
+        } else {
+          log("ERROR : ${error.code}");
+        }
+      },
+      codeSent: (verificationId, forceResendingToken) {
+        verificationMyId = verificationId;
+        log("NUMBER : $verificationMyId");
+      },
+      codeAutoRetrievalTimeout: (verificationId) {},
+    );
+  }
+  Future<Map<String, dynamic>> checkMyOTP({required String otp}) async {
+    Map<String, dynamic> res = {};
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationMyId, smsCode: otp);
+
+      UserCredential userCredential =
+      await auth.signInWithCredential(credential);
+      User? user = userCredential.user;
+      res['user'] = user;
+    } catch (e) {
+      log("ERROR : $e");
+      res['error'] = e;
+    }
+
+    return res;
   }
 }

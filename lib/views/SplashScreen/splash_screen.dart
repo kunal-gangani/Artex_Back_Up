@@ -23,7 +23,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void startProgress() {
     // Timer that increases progressValue every 100ms
-    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+    timer = Timer.periodic(
+        const Duration(
+          milliseconds: 100,
+        ), (timer) {
       if (progressValue < 1.0) {
         setState(() {
           progressValue += 0.02; // Increase progress value
