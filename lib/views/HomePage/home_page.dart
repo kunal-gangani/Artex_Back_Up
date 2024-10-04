@@ -1,7 +1,6 @@
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:minor_project/views/BidsPlacedPage/bids_placed.dart';
 import 'package:minor_project/views/FavourtiesPage/favourites_page.dart';
 import 'package:minor_project/views/HomePage/assets/widgets/listview_container.dart';
@@ -61,7 +60,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(
                 Icons.favorite,
                 size: 32.w,
-                color: Colors.white,
+                color: Colors.red,
               ),
             ),
             if (favouriteItems.isNotEmpty)

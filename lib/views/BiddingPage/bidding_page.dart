@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toastification/toastification.dart'; // Import the toastification package
 import 'package:minor_project/views/HomePage/home_page.dart';
+import 'package:toastification/toastification.dart';
+import 'package:minor_project/globals/bids_placed_list.dart';
 
 class BiddingPage extends StatefulWidget {
   final String artName;
@@ -22,96 +23,25 @@ class BiddingPage extends StatefulWidget {
 }
 
 class _BiddingPageState extends State<BiddingPage> {
-  late int currentHighestBid;
   int userBid = 0; // Track user bid
   final TextEditingController bidController = TextEditingController();
   bool canSave = false; // Show/hide save button
-  bool isBiddingActive = false; // Control the active state of bidding
-
-  // Timer-related variables
-  Timer? biddingTimer;
-  int biddingDuration = 60; // Duration in seconds
-  String formattedTime = "00:01:00"; // Initial formatted time
+  bool bidSubmitted = false; // Track if bid is submitted
 
   @override
   void initState() {
     super.initState();
-    currentHighestBid =
-        widget.currentHighestBid; // Initialize with passed value
-    updateFormattedTime(); // Set initial formatted time
   }
 
-  // Function to start the bidding timer
-  void startBiddingTimer() {
-    biddingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (biddingDuration > 0) {
-        setState(() {
-          biddingDuration--; // Decrease duration every second
-          updateFormattedTime(); // Update formatted time in the UI
-        });
-      } else {
-        // Timer ends, cancel the timer
-        timer.cancel();
-        setState(() {
-          isBiddingActive = false; // Bidding period has ended
-        });
-        showWinnerDialog(); // Show dialog for the winner
-      }
-    });
-  }
-
-  // Function to update the formatted time display
-  void updateFormattedTime() {
-    final duration = Duration(seconds: biddingDuration);
-    final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
-    final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
-    formattedTime = "00:$minutes:$seconds"; // Set time in mm:ss format
-  }
-
-  // Function to handle bidding logic
+  // Function to handle bidding logic and send data to global bidsPlacedList
   void placeBid() {
-    if (!isBiddingActive) {
-      // Show an error if bidding has ended
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: Colors.red.shade50,
-            title: const Text("Bidding Closed"),
-            content: const Text(
-              "The bidding period has ended. You cannot place any more bids.",
-              style: TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text(
-                  "OK",
-                  style: TextStyle(
-                    color: Colors.black87,
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      );
-      return; // Early return if bidding is closed
-    }
-
     if (bidController.text.isEmpty) {
-      // Show an error message if the bid amount is empty
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.red.shade50,
-            title: const Text(
-              "Error",
-            ),
+            title: const Text("Error"),
             content: const Text(
               "Please enter a bid amount before submitting.",
               style: TextStyle(
@@ -122,88 +52,112 @@ class _BiddingPageState extends State<BiddingPage> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text(
-                  "OK",
-                ),
+                child: const Text("OK"),
               ),
             ],
           );
         },
       );
-      return; // Early return if bid is empty
+      return;
     }
 
     setState(() {
       userBid = int.tryParse(bidController.text) ?? 0;
 
-      if (userBid > currentHighestBid) {
-        // Successful bid
-        currentHighestBid = userBid;
-        canSave = true; // Show save button
+      String bidStatus = 'unconfirmed';
 
-        // Start the bidding timer if it hasn't started
-        if (!isBiddingActive) {
-          isBiddingActive = true;
-          startBiddingTimer();
-        }
+      if (userBid > widget.currentHighestBid) {
+        canSave = true;
+        bidSubmitted = true;
+
+        bidStatus = 'unconfirmed';
+
+        // Add to global list with bidStatus
+        bidsPlacedList.add({
+          'artName': widget.artName,
+          'bidAmount': userBid,
+          'wonBid': false,
+          'bidStatus': bidStatus, // New field for bid status
+          'date': DateTime.now().toString(),
+          'imageUrl': widget.imageUrl,
+        });
 
         // Display success toast
         toastification.show(
           context: context,
           type: ToastificationType.success,
-          title: const Text(
-            "Success",
-          ),
-          description: Text(
-            "Your bid of ₹$userBid has been placed!",
-          ),
+          title: const Text("Success"),
+          description: Text("Your bid of ₹$userBid has been placed!"),
           backgroundColor: Colors.greenAccent.shade100,
           autoCloseDuration: const Duration(seconds: 5),
         );
-      } else if (userBid == currentHighestBid) {
-        // Display warning for same bid amount
+
+        // Start a timer for 2 minutes to check if the user still has the highest bid
+        Timer(const Duration(minutes: 2), () {
+          if (bidSubmitted && userBid > widget.currentHighestBid) {
+            // Update bid status in bidsPlacedList
+            setState(() {
+              bidsPlacedList.last['wonBid'] = true;
+              bidsPlacedList.last['bidStatus'] = 'success';
+            });
+            // Show winning message
+            showWinningDialog();
+          } else {
+            // If the bid is lost, update the status to 'loss'
+            setState(() {
+              bidsPlacedList.last['bidStatus'] = 'loss';
+            });
+          }
+        });
+
+        // Navigate back to the HomePage after placing the bid
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      } else if (userBid == widget.currentHighestBid) {
         toastification.show(
           context: context,
           type: ToastificationType.warning,
           title: const Text("Same Bid Amount"),
           description: Text(
-              "Your bid of ₹$userBid is equal to the current highest bid. Try bidding a higher amount to win this lot."),
+            "Your bid of ₹$userBid is equal to the current highest bid. Try bidding a higher amount to win this lot.",
+          ),
           backgroundColor: Colors.orangeAccent.shade100,
           autoCloseDuration: const Duration(seconds: 5),
         );
-        canSave = false; // Hide save button
+        canSave = false;
       } else {
-        // Display error for lower bid
         toastification.show(
           context: context,
           type: ToastificationType.error,
-          title: const Text(
-            "Warning",
-          ),
+          title: const Text("Warning"),
           description: Text(
-            "This lot already has ₹$currentHighestBid amount bidded on it. Try another larger amount to win this.",
+            "This lot already has ₹${widget.currentHighestBid} amount bidded on it. Try another larger amount to win this.",
           ),
           backgroundColor: Colors.redAccent.shade100,
           autoCloseDuration: const Duration(seconds: 5),
         );
-        canSave = false; // Hide save button
+        canSave = false;
       }
     });
   }
 
-  // Function to display the winner once bidding ends
-  void showWinnerDialog() {
+  // Function to display the winning message
+  void showWinningDialog() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.blue.shade50,
+          backgroundColor: Colors.green.shade50,
           title: const Text(
-            "Bidding Ended",
+            "Congratulations!",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content: Text(
-            "The bidding has ended. The highest bid was ₹$currentHighestBid. Congratulations to the highest bidder!",
+            "You have won the bid with an amount of ₹$userBid!",
             style: const TextStyle(color: Colors.black),
           ),
           actions: [
@@ -227,7 +181,6 @@ class _BiddingPageState extends State<BiddingPage> {
   @override
   void dispose() {
     bidController.dispose();
-    biddingTimer?.cancel(); // Cancel the timer when disposing
     super.dispose();
   }
 
@@ -236,7 +189,7 @@ class _BiddingPageState extends State<BiddingPage> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        title: Text(widget.artName), // Display art name
+        title: Text(widget.artName),
         backgroundColor: Colors.blueAccent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
@@ -247,25 +200,17 @@ class _BiddingPageState extends State<BiddingPage> {
             visible: canSave,
             child: IconButton(
               onPressed: () {
-                // Show success toast when the bid is saved
                 toastification.show(
                   context: context,
                   type: ToastificationType.success,
-                  title: const Text(
-                    'Bid Saved',
-                  ),
-                  description: const Text(
-                    'Your bid has been saved successfully.',
-                  ),
+                  title: const Text('Bid Saved'),
+                  description:
+                      const Text('Your bid has been saved successfully.'),
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
-                  autoCloseDuration: const Duration(
-                    seconds: 5,
-                  ),
+                  autoCloseDuration: const Duration(seconds: 5),
                 );
-                Flexify.goRemoveAll(
-                  const HomePage(),
-                ); // Navigate to homepage
+                Flexify.goRemoveAll(const HomePage());
               },
               icon: const Icon(
                 Icons.save,
@@ -276,95 +221,75 @@ class _BiddingPageState extends State<BiddingPage> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 20,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Display Art Image
-            Image.asset(
-              widget.imageUrl,
-              width: double.infinity,
-              height: 200.h,
-              fit: BoxFit.cover,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 200.h,
+                  width: 200.w,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 8.0,
+                        color: Colors.black.withOpacity(0.25),
+                        spreadRadius: 1.0,
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      widget.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20.h),
-            // Countdown Timer Display
             Text(
-              "Time Remaining:",
+              "Current Highest Bid: ₹${widget.currentHighestBid}",
               style: TextStyle(
-                fontSize: 22.sp,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
-            Text(
-              formattedTime, // Display formatted time
-              style: TextStyle(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
-              ),
-            ),
             SizedBox(height: 20.h),
-            // Current Highest Bid Display
-            Text(
-              "Current Highest Bid: ₹$currentHighestBid",
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-            SizedBox(height: 20.h),
-            // Enter Bid
-            Text(
-              "Enter Your Bid:",
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
+            // Bid Input Field
             TextField(
               controller: bidController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white70,
-                hintText: "Enter bid amount",
+              decoration: InputDecoration(
+                labelText: "Enter Your Bid Amount",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
-            SizedBox(
-              height: 20.h,
-            ),
-            // Submit Button
-            Center(
-              child: ElevatedButton(
-                onPressed: placeBid,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue.shade400,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+            SizedBox(height: 20.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: placeBid,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    maximumSize: Size(150.w, 45.h),
+                  ),
+                  child: const Text(
+                    "Place Bid",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                child: const Text(
-                  "Submit My Bid",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              ],
             ),
           ],
         ),

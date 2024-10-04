@@ -31,7 +31,7 @@ class _BidsPlacedPageState extends State<BidsPlacedPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Bid Amount: ₹{bid['amount']}", // Replace 'amount' with your bid amount key
+                          "Bid Amount: ₹${bid['bidAmount']}",
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class _BidsPlacedPageState extends State<BidsPlacedPage> {
                           height: 10.h,
                         ),
                         Text(
-                          "Item: {bid['item']}", // Replace 'item' with your item name key
+                          "Item: ${bid['artName']}",
                           style: TextStyle(
                             fontSize: 18.sp,
                             color: Colors.grey[700],
@@ -49,10 +49,32 @@ class _BidsPlacedPageState extends State<BidsPlacedPage> {
                         ),
                         SizedBox(height: 10.h),
                         Text(
-                          "Placed On: {bid['date']}", // Replace 'date' with your date key
+                          "Placed On: ${bid['date']}",
                           style: TextStyle(
                             fontSize: 16.sp,
                             color: Colors.grey[500],
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        Image.asset(
+                          bid['imageUrl'],
+                          height: 150.h,
+                          width: 150.w,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Text(
+                          "Status: ${bid['bidStatus']}",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: bid['bidStatus'] == 'success'
+                                ? Colors.green
+                                : bid['bidStatus'] == 'loss'
+                                    ? Colors.red
+                                    : Colors.orange,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
