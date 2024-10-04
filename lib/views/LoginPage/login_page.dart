@@ -62,13 +62,12 @@ class _LoginPageState extends State<LoginPage> {
           .then((value) {
         if (value != null) {
           AuthHelper.authHelper
-              .phoneVerification(phoneNumber: _phoneController.text,)
+              .phoneVerification(
+            phoneNumber: _phoneController.text,
+          )
               .then((value) {
             Flexify.goRemove(
-              OTPVerificationPage(
-                phoneNumber: _phoneController.text,
-                countryCode: "+91",
-              ),
+              const HomePage(),
               animation: FlexifyRouteAnimations.blur,
               duration: Durations.medium1,
             );
@@ -90,9 +89,7 @@ class _LoginPageState extends State<LoginPage> {
           //     ),
           //   ),
           // );
-        } else {
-
-        }
+        } else {}
       });
     }
   }
@@ -152,7 +149,9 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: 'Email',
-                            prefixIcon: const Icon(Icons.email),
+                            prefixIcon: const Icon(
+                              Icons.email,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
                                 12.0,

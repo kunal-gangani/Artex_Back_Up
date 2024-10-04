@@ -22,10 +22,11 @@ class OTPVerificationPage extends StatefulWidget {
 class _OTPVerificationPageState extends State<OTPVerificationPage> {
   final TextEditingController _otpController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();String otp = "";
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String otp = "";
 
   // Method to validate OTP
-  void _verifyOTP() async{
+  void _verifyOTP() async {
     if (_formKey.currentState?.validate() == true) {
       // Here, you can use widget.phoneNumber and widget.countryCode as needed
       Map<String, dynamic> res =
@@ -61,7 +62,6 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
       //     ),
       //   ),
       // );
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -141,9 +141,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                   onChanged: (value) {
                     // Handle OTP change if needed
                     otp = value;
-                    setState(() {
-
-                    });
+                    setState(() {});
                   },
                   focusedPinTheme: PinTheme(
                     height: 50,

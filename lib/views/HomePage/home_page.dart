@@ -1,13 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:minor_project/globals/art_data.dart';
-import 'package:minor_project/model/hots_data_model.dart';
-import 'package:minor_project/model/house_holds_data_model.dart';
+
 import 'package:minor_project/views/BidsPlacedPage/bids_placed.dart';
 import 'package:minor_project/views/FavourtiesPage/favourites_page.dart';
-import 'package:minor_project/views/HomePage/assets/widgets/listview_container.dart';
+import 'package:minor_project/views/HomePage/components/home_page.dart';
 import 'package:minor_project/views/ReviewsPage/reviews_page.dart';
 import 'package:minor_project/views/UserProfilePage/user_profile_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -21,7 +18,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentBottomNavIndex = 0;
-  int _currentCarouselIndex = 0;
 
   final List<String> imageList = [
     'lib/views/HomePage/assets/carousel_images/image1.jpg',
@@ -29,6 +25,13 @@ class _HomePageState extends State<HomePage> {
     'lib/views/HomePage/assets/carousel_images/image3.jpg',
     'lib/views/HomePage/assets/carousel_images/image4.jpg',
     'lib/views/HomePage/assets/carousel_images/image5.jpg',
+  ];
+
+  List allPages = [
+    const HomePageComponent(),
+    const BidsPlacedPage(),
+    const ReviewsPage(),
+    const UserProfilePage(),
   ];
 
   @override
@@ -64,181 +67,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CarouselSlider.builder(
-                itemCount: imageList.length,
-                itemBuilder: (context, index, realIndex) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 5.0,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: AssetImage(
-                          imageList[index],
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  height: 200.0,
-                  autoPlay: true,
-                  enlargeCenterPage: true,
-                  aspectRatio: 16 / 9,
-                  enableInfiniteScroll: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _currentCarouselIndex = index;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Text(
-                "Hots Right Now",
-                style: TextStyle(
-                  fontSize: 19.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                height: 210.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: artHotsList.length,
-                  itemBuilder: (context, index) {
-                    HotsDataModel item = hots[index];
-                    return hotListViewContainer(
-                      e: item,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Text(
-                "Most Picked Arts",
-                style: TextStyle(
-                  fontSize: 19.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                height: 210.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: artFamousList.length,
-                  itemBuilder: (context, index) {
-                    final item = famous[index];
-                    return famousListViewContainer(
-                      e: item,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Text(
-                "Suitable for House-holds",
-                style: TextStyle(
-                  fontSize: 19.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                height: 210.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: artHouseHoldsList.length,
-                  itemBuilder: (
-                    context,
-                    index,
-                  ) {
-                    HouseHoldsDataModel item = households[index];
-                    return houseListViewContainer(
-                      e: item,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Flexify.go(
-                        const BidsPlacedPage(),
-                        animation: FlexifyRouteAnimations.blur,
-                        animationDuration: Durations.medium1,
-                      );
-                    },
-                    child: const Text(
-                      "Button",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15.w,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Flexify.go(
-                        const ReviewsPage(),
-                        animation: FlexifyRouteAnimations.blur,
-                        animationDuration: Durations.medium1,
-                      );
-                    },
-                    child: const Text(
-                      "Button",
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15.w,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Flexify.go(
-                        const UserProfilePage(),
-                        animation: FlexifyRouteAnimations.blur,
-                        animationDuration: Durations.medium1,
-                      );
-                    },
-                    child: const Text(
-                      "Button",
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: allPages[_currentBottomNavIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.lightBlue[50],
