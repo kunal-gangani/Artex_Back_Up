@@ -37,8 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_screenutil: ^5.9.3
   flexify: ^2.1.1
-  lottie: ^3.1.2
-  appbar_animated: ^0.0.3
   salomon_bottom_bar: ^3.3.2
   toastification: ^2.2.0
   pinput: ^5.0.0
