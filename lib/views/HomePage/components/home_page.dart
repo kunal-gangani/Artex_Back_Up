@@ -20,11 +20,11 @@ class HomePageComponent extends StatefulWidget {
 
 class _HomePageComponentState extends State<HomePageComponent> {
   final List<String> imageList = [
-    'lib/views/HomePageComponent/assets/carousel_images/image1.jpg',
-    'lib/views/HomePageComponent/assets/carousel_images/image2.jpg',
-    'lib/views/HomePageComponent/assets/carousel_images/image3.jpg',
-    'lib/views/HomePageComponent/assets/carousel_images/image4.jpg',
-    'lib/views/HomePageComponent/assets/carousel_images/image5.jpg',
+    'lib/views/HomePage/assets/carousel_images/image1.jpg',
+    'lib/views/HomePage/assets/carousel_images/image2.jpg',
+    'lib/views/HomePage/assets/carousel_images/image3.jpg',
+    'lib/views/HomePage/assets/carousel_images/image4.jpg',
+    'lib/views/HomePage/assets/carousel_images/image5.jpg',
   ];
   int _currentCarouselIndex = 0;
   @override
@@ -37,9 +37,15 @@ class _HomePageComponentState extends State<HomePageComponent> {
           children: [
             CarouselSlider.builder(
               itemCount: imageList.length,
-              itemBuilder: (context, index, realIndex) {
+              itemBuilder: (
+                context,
+                index,
+                realIndex,
+              ) {
                 return AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
+                  duration: const Duration(
+                    milliseconds: 500,
+                  ),
                   curve: Curves.easeInOut,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 8.0,
@@ -207,55 +213,6 @@ class _HomePageComponentState extends State<HomePageComponent> {
                   );
                 },
               ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Flexify.go(
-                      const BidsPlacedPage(),
-                      animation: FlexifyRouteAnimations.blur,
-                      animationDuration: Durations.medium1,
-                    );
-                  },
-                  child: const Text(
-                    "Button",
-                  ),
-                ),
-                SizedBox(
-                  width: 15.w,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Flexify.go(
-                      const ReviewsPage(),
-                      animation: FlexifyRouteAnimations.blur,
-                      animationDuration: Durations.medium1,
-                    );
-                  },
-                  child: const Text(
-                    "Button",
-                  ),
-                ),
-                SizedBox(
-                  width: 15.w,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Flexify.go(
-                      const UserProfilePage(),
-                      animation: FlexifyRouteAnimations.blur,
-                      animationDuration: Durations.medium1,
-                    );
-                  },
-                  child: const Text(
-                    "Button",
-                  ),
-                ),
-              ],
             ),
           ],
         ),

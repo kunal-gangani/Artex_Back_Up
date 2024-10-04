@@ -12,6 +12,14 @@ class FavouritesPage extends StatefulWidget {
 }
 
 class _FavouritesPageState extends State<FavouritesPage> {
+  // Initialize the favouriteItems list to prevent null exceptions.
+  List<String> favouriteItems = [
+    "Art Piece 1",
+    "Art Piece 2",
+    "Art Piece 3",
+    "Art Piece 4",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +109,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
     );
   }
 
+  // Remove item from the list and update the state.
   void _removeItem(int index) {
     setState(() {
       favouriteItems.removeAt(index);

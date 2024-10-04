@@ -13,18 +13,11 @@ class _BidsPlacedPageState extends State<BidsPlacedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Bids Placed",
-        ),
-        backgroundColor: Colors.blue.shade200,
-      ),
       body: bidsPlacedList.isNotEmpty
           ? ListView.builder(
               itemCount: bidsPlacedList.length,
               itemBuilder: (context, index) {
-                final bid = bidsPlacedList[
-                    index]; // Assuming each bid is an object with required properties
+                final bid = bidsPlacedList[index];
                 return Card(
                   color: Colors.grey[100],
                   margin: EdgeInsets.symmetric(

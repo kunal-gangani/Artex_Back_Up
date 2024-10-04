@@ -27,46 +27,79 @@ class _HomePageState extends State<HomePage> {
     'lib/views/HomePage/assets/carousel_images/image5.jpg',
   ];
 
-  List allPages = [
+  List<Widget> allPages = [
     const HomePageComponent(),
     const BidsPlacedPage(),
-    const ReviewsPage(),
+    ArtReviewsPage(),
     const UserProfilePage(),
+  ];
+
+  // List of AppBars to switch based on the selected index
+  final List<AppBar> appBars = [
+    AppBar(
+      elevation: 2,
+      backgroundColor: Colors.blueAccent,
+      title: Text(
+        "Welcome Art Aficionado",
+        style: TextStyle(
+          fontSize: 20.sp,
+          color: Colors.white,
+        ),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            Flexify.go(
+              const FavouritesPage(),
+              animation: FlexifyRouteAnimations.blur,
+              animationDuration: Durations.medium1,
+            );
+          },
+          icon: Icon(
+            Icons.favorite_border_outlined,
+            size: 32.w,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(
+          width: 10.w,
+        ),
+      ],
+    ),
+    AppBar(
+      title: const Text(
+        "Bids Placed",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Colors.blueAccent,
+    ),
+    AppBar(
+      title: const Text(
+        "Reviews",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Colors.blueAccent,
+    ),
+    AppBar(
+      title: const Text(
+        "User Profile",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Colors.blueAccent,
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 2,
-        backgroundColor: Colors.blueAccent,
-        title: Text(
-          "Welcome Art Aficionado",
-          style: TextStyle(
-            fontSize: 20.sp,
-            color: Colors.white,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Flexify.go(
-                const FavouritesPage(),
-                animation: FlexifyRouteAnimations.blur,
-                animationDuration: Durations.medium1,
-              );
-            },
-            icon: Icon(
-              Icons.favorite_border_outlined,
-              size: 32.w,
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-        ],
-      ),
+      appBar: appBars[_currentBottomNavIndex],
       body: allPages[_currentBottomNavIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -76,7 +109,10 @@ class _HomePageState extends State<HomePage> {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: const Offset(0, 3),
+              offset: const Offset(
+                0,
+                3,
+              ),
             ),
           ],
         ),
@@ -116,9 +152,7 @@ class _HomePageState extends State<HomePage> {
             ),
             SalomonBottomBarItem(
               selectedColor: Colors.red,
-              icon: const Icon(
-                Icons.reviews,
-              ),
+              icon: const Icon(Icons.reviews),
               title: Text(
                 "Insights",
                 style: TextStyle(
@@ -129,9 +163,7 @@ class _HomePageState extends State<HomePage> {
             ),
             SalomonBottomBarItem(
               selectedColor: Colors.orange,
-              icon: const Icon(
-                Icons.person,
-              ),
+              icon: const Icon(Icons.person),
               title: Text(
                 "Profile",
                 style: TextStyle(

@@ -12,8 +12,7 @@ List<dynamic> favouriteItems = [];
 GestureDetector houseListViewContainer({
   required HouseHoldsDataModel e,
 }) {
-  bool isFavorited =
-      favouriteItems.contains(e); // Check if the item is already in favorites
+  bool isFavorited = favouriteItems.contains(e);
 
   return GestureDetector(
     onTap: () {
