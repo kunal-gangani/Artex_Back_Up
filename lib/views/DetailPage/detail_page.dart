@@ -10,33 +10,31 @@ class DetailPage extends StatelessWidget {
   final String description;
   final double minBidPrice;
 
-
-  
   const DetailPage({
-    Key? key,
+    super.key,
     required this.artName,
     required this.painter,
     required this.imageUrl,
     required this.description,
     required this.minBidPrice,
-  }) : super(key: key);
+  });
 
   void _onPlaceYourBidButtonPressed() {
-  // Assuming you have access to these values:
-  String artName = "Artwork Title"; // Get this from your data model
-  String imageUrl = "path/to/image.jpg"; // Get this from your data model
-  int currentHighestBid = 15000; // Get this from your data model
+    // Assuming you have access to these values:
+    String artName = this.artName;
+    String imageUrl = this.imageUrl;
+    int currentHighestBid = minBidPrice.toInt();
 
-  Flexify.go(
-    BiddingPage(
-      artName: artName,
-      imageUrl: imageUrl,
-      currentHighestBid: currentHighestBid,
-    ),
-    animation: FlexifyRouteAnimations.blur,
-    animationDuration: Durations.medium1,
-  );
-}
+    Flexify.go(
+      BiddingPage(
+        artName: artName,
+        imageUrl: imageUrl,
+        currentHighestBid: currentHighestBid,
+      ),
+      animation: FlexifyRouteAnimations.blur,
+      animationDuration: Durations.medium1,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +184,11 @@ class DetailPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   Flexify.go(
-                    const BiddingPage(),
+                    BiddingPage(
+                      artName: artName,
+                      imageUrl: imageUrl,
+                      currentHighestBid: minBidPrice.toInt(),
+                    ),
                     animation: FlexifyRouteAnimations.blur,
                     animationDuration: Durations.medium1,
                   );

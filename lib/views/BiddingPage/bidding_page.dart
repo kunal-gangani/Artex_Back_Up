@@ -6,14 +6,23 @@ import 'package:toastification/toastification.dart'; // Import the toastificatio
 import 'package:minor_project/views/HomePage/home_page.dart';
 
 class BiddingPage extends StatefulWidget {
-  const BiddingPage({super.key});
+  final String artName;
+  final String imageUrl;
+  final int currentHighestBid;
+
+  const BiddingPage({
+    super.key,
+    required this.artName,
+    required this.imageUrl,
+    required this.currentHighestBid,
+  });
 
   @override
   State<BiddingPage> createState() => _BiddingPageState();
 }
 
 class _BiddingPageState extends State<BiddingPage> {
-  int currentHighestBid = 15000; // Starting highest bid
+  late int currentHighestBid;
   int userBid = 0; // Track user bid
   final TextEditingController bidController = TextEditingController();
   bool canSave = false; // Show/hide save button
@@ -27,6 +36,8 @@ class _BiddingPageState extends State<BiddingPage> {
   @override
   void initState() {
     super.initState();
+    currentHighestBid =
+        widget.currentHighestBid; // Initialize with passed value
     updateFormattedTime(); // Set initial formatted time
   }
 
@@ -156,7 +167,7 @@ class _BiddingPageState extends State<BiddingPage> {
           type: ToastificationType.warning,
           title: const Text("Same Bid Amount"),
           description: Text(
-              "Your bid of ₹$userBid is equal to the current highest bid. Try bidding a higher amount to win this lot.,"),
+              "Your bid of ₹$userBid is equal to the current highest bid. Try bidding a higher amount to win this lot."),
           backgroundColor: Colors.orangeAccent.shade100,
           autoCloseDuration: const Duration(seconds: 5),
         );
@@ -225,7 +236,7 @@ class _BiddingPageState extends State<BiddingPage> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        title: const Text('Place Your Bid'),
+        title: Text(widget.artName), // Display art name
         backgroundColor: Colors.blueAccent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
@@ -272,6 +283,14 @@ class _BiddingPageState extends State<BiddingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Display Art Image
+            Image.asset(
+              widget.imageUrl,
+              width: double.infinity,
+              height: 200.h,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 20.h),
             // Countdown Timer Display
             Text(
               "Time Remaining:",
