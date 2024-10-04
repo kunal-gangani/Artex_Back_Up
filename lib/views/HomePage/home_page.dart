@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:minor_project/views/BidsPlacedPage/bids_placed.dart';
 import 'package:minor_project/views/FavourtiesPage/favourites_page.dart';
+import 'package:minor_project/views/HomePage/assets/widgets/listview_container.dart';
 import 'package:minor_project/views/HomePage/components/home_page.dart';
 import 'package:minor_project/views/ReviewsPage/reviews_page.dart';
 import 'package:minor_project/views/UserProfilePage/user_profile_page.dart';
@@ -47,19 +48,49 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       actions: [
-        IconButton(
-          onPressed: () {
-            Flexify.go(
-              const FavouritesPage(),
-              animation: FlexifyRouteAnimations.blur,
-              animationDuration: Durations.medium1,
-            );
-          },
-          icon: Icon(
-            Icons.favorite_border_outlined,
-            size: 32.w,
-            color: Colors.white,
-          ),
+        Stack(
+          children: [
+            IconButton(
+              onPressed: () {
+                Flexify.go(
+                  const FavouritesPage(),
+                  animation: FlexifyRouteAnimations.blur,
+                  animationDuration: Durations.medium1,
+                );
+              },
+              icon: Icon(
+                Icons.favorite,
+                size: 32.w,
+                color: Colors.white,
+              ),
+            ),
+            if (favouriteItems.isNotEmpty)
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  constraints: const BoxConstraints(
+                    maxWidth: 20,
+                    maxHeight: 20,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${favouriteItems.length}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
         SizedBox(
           width: 10.w,

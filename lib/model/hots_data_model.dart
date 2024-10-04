@@ -17,7 +17,7 @@ class HotsDataModel {
     required this.minBidPrice,
   });
 
-  factory HotsDataModel.fun({required Map data}) {
+  factory HotsDataModel.toMap({required Map data}) {
     return HotsDataModel(
       artId: data['artId'],
       artName: data['artName'],

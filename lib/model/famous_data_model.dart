@@ -17,7 +17,7 @@ class FamousDataModel {
     required this.minBidPrice,
   });
 
-  factory FamousDataModel.fun({
+  factory FamousDataModel.toMap({
     required Map data,
   }) {
     return FamousDataModel(

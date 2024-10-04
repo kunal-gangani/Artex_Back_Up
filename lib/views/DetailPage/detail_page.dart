@@ -3,14 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:minor_project/views/BiddingPage/bidding_page.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+class DetailPage extends StatelessWidget {
+  final String artName;
+  final String painter;
+  final String imageUrl;
+  final String description;
+  final double minBidPrice;
 
-  @override
-  State<DetailPage> createState() => _DetailPageState();
+
+  
+  const DetailPage({
+    Key? key,
+    required this.artName,
+    required this.painter,
+    required this.imageUrl,
+    required this.description,
+    required this.minBidPrice,
+  }) : super(key: key);
+
+  void _onPlaceYourBidButtonPressed() {
+  // Assuming you have access to these values:
+  String artName = "Artwork Title"; // Get this from your data model
+  String imageUrl = "path/to/image.jpg"; // Get this from your data model
+  int currentHighestBid = 15000; // Get this from your data model
+
+  Flexify.go(
+    BiddingPage(
+      artName: artName,
+      imageUrl: imageUrl,
+      currentHighestBid: currentHighestBid,
+    ),
+    animation: FlexifyRouteAnimations.blur,
+    animationDuration: Durations.medium1,
+  );
 }
 
-class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +54,7 @@ class _DetailPageState extends State<DetailPage> {
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
         title: Text(
-          "Mona Lisa",
+          artName,
           style: TextStyle(
             fontSize: 22.sp,
             fontWeight: FontWeight.bold,
@@ -52,17 +79,13 @@ class _DetailPageState extends State<DetailPage> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/Famous/Image4.jpg',
-                      ),
+                    image: DecorationImage(
+                      image: AssetImage(imageUrl),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                SizedBox(height: 20.h),
                 // Art Name and Painter
                 Expanded(
                   child: Column(
@@ -81,7 +104,7 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                             ),
                             TextSpan(
-                              text: "Mona Lisa", // Value text
+                              text: artName, // Value text
                               style: TextStyle(
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.bold,
@@ -91,9 +114,7 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 8.h,
-                      ),
+                      SizedBox(height: 8.h),
                       RichText(
                         text: TextSpan(
                           children: [
@@ -106,7 +127,7 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                             ),
                             TextSpan(
-                              text: "Leonardo da Vinci", // Value text
+                              text: painter, // Value text
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
@@ -116,9 +137,7 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 8.h,
-                      ),
+                      SizedBox(height: 8.h),
                       // Art Description
                       RichText(
                         text: TextSpan(
@@ -132,8 +151,7 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                             ),
                             TextSpan(
-                              text:
-                                  "The Mona Lisa is one of the most recognizable and acclaimed paintings in the world. It was created by Leonardo da Vinci during the Italian Renaissance period.",
+                              text: description,
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 color: Colors.white70,
@@ -143,12 +161,10 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 8.h,
-                      ),
+                      SizedBox(height: 8.h),
                       // Minimum Bid Amount
                       Text(
-                        "Minimum Bid: \$15,000",
+                        "Minimum Bid: \$${minBidPrice.toString()}",
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
@@ -163,15 +179,12 @@ class _DetailPageState extends State<DetailPage> {
           ),
           // BID Button at the bottom
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20.w,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: SizedBox(
               width: double.infinity,
               height: 60.h,
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigate to BiddingPage with animation
                   Flexify.go(
                     const BiddingPage(),
                     animation: FlexifyRouteAnimations.blur,

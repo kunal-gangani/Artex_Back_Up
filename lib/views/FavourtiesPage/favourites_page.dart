@@ -12,14 +12,6 @@ class FavouritesPage extends StatefulWidget {
 }
 
 class _FavouritesPageState extends State<FavouritesPage> {
-  // Initialize the favouriteItems list to prevent null exceptions.
-  List<String> favouriteItems = [
-    "Art Piece 1",
-    "Art Piece 2",
-    "Art Piece 3",
-    "Art Piece 4",
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +66,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
                 child: Container(
                   padding: EdgeInsets.all(16.w),
                   height: 125.h,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.r),
                     gradient: LinearGradient(
@@ -85,14 +78,26 @@ class _FavouritesPageState extends State<FavouritesPage> {
                       end: Alignment.bottomRight,
                     ),
                   ),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        favouriteItems[index],
+                        favouriteItems[index].artName,
                         style: TextStyle(
                           fontSize: 18.sp,
                           color: Colors.black87,
                           fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Text(
+                        "by ${favouriteItems[index].painter}",
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],

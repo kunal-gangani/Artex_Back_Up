@@ -17,7 +17,7 @@ class HouseHoldsDataModel {
     required this.minBidPrice,
   });
 
-  factory HouseHoldsDataModel.fun({required Map data}) {
+  factory HouseHoldsDataModel.toMap({required Map data}) {
     return HouseHoldsDataModel(
       artId: data['artId'],
       artName: data['artName'],

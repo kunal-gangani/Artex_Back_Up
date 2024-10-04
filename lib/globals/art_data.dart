@@ -111,11 +111,9 @@ List<Map<String, dynamic>> artFamousList = [
 ];
 
 List<FamousDataModel> famous = artFamousList
-    .map(
-      (e) => FamousDataModel.fun(
-        data: e,
-      ),
-    )
+    .map((e) => FamousDataModel.toMap(
+          data: e,
+        ))
     .toList();
 
 List<Map<String, dynamic>> artHotsList = [
@@ -216,7 +214,7 @@ List<Map<String, dynamic>> artHotsList = [
 
 List hots = artHotsList
     .map(
-      (e) => HotsDataModel.fun(
+      (e) => HotsDataModel.toMap(
         data: e,
       ),
     )
@@ -324,8 +322,9 @@ List<Map<String, dynamic>> artHouseHoldsList = [
 
 List households = artHouseHoldsList
     .map(
-      (e) => HouseHoldsDataModel.fun(
+      (e) => HouseHoldsDataModel.toMap(
         data: e,
       ),
     )
     .toList();
+

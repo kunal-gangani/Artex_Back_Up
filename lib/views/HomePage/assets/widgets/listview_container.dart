@@ -16,7 +16,9 @@ GestureDetector houseListViewContainer({
 
   return GestureDetector(
     onTap: () {
-      _navigateToDetailPage();
+      _navigateToHouseDetailPage(
+        house: e,
+      );
     },
     child: Stack(
       children: [
@@ -45,7 +47,9 @@ GestureDetector hotListViewContainer({
 
   return GestureDetector(
     onTap: () {
-      _navigateToDetailPage();
+      _navigateToHotsDetailPage(
+        house: e,
+      );
     },
     child: Stack(
       children: [
@@ -74,7 +78,9 @@ GestureDetector famousListViewContainer({
 
   return GestureDetector(
     onTap: () {
-      _navigateToDetailPage();
+      _navigateToFamousDetailPage(
+        house: e,
+      );
     },
     child: Stack(
       children: [
@@ -206,9 +212,49 @@ Widget _buildAddButton({
 }
 
 // Navigation function to Detail Page
-void _navigateToDetailPage() {
+void _navigateToHouseDetailPage({
+  required HouseHoldsDataModel house,
+}) {
   Flexify.go(
-    const DetailPage(),
+    DetailPage(
+      artName: house.artName,
+      imageUrl: house.imageUrl,
+      painter: house.painter,
+      description: house.description,
+      minBidPrice: house.minBidPrice.toDouble(),
+    ),
+    animation: FlexifyRouteAnimations.blur,
+    animationDuration: Durations.medium1,
+  );
+}
+
+void _navigateToHotsDetailPage({
+  required HotsDataModel house,
+}) {
+  Flexify.go(
+    DetailPage(
+      artName: house.artName,
+      imageUrl: house.imageUrl,
+      painter: house.painter,
+      description: house.description,
+      minBidPrice: house.minBidPrice.toDouble(),
+    ),
+    animation: FlexifyRouteAnimations.blur,
+    animationDuration: Durations.medium1,
+  );
+}
+
+void _navigateToFamousDetailPage({
+  required FamousDataModel house,
+}) {
+  Flexify.go(
+    DetailPage(
+      artName: house.artName,
+      imageUrl: house.imageUrl,
+      painter: house.painter,
+      description: house.description,
+      minBidPrice: house.minBidPrice.toDouble(),
+    ),
     animation: FlexifyRouteAnimations.blur,
     animationDuration: Durations.medium1,
   );

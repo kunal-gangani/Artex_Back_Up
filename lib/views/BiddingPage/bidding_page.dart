@@ -69,13 +69,20 @@ class _BiddingPageState extends State<BiddingPage> {
             title: const Text("Bidding Closed"),
             content: const Text(
               "The bidding period has ended. You cannot place any more bids.",
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child:
-                    const Text("OK", style: TextStyle(color: Colors.black87)),
+                child: const Text(
+                  "OK",
+                  style: TextStyle(
+                    color: Colors.black87,
+                  ),
+                ),
               ),
             ],
           );
@@ -91,15 +98,22 @@ class _BiddingPageState extends State<BiddingPage> {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.red.shade50,
-            title: const Text("Error"),
+            title: const Text(
+              "Error",
+            ),
             content: const Text(
               "Please enter a bid amount before submitting.",
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text("OK"),
+                child: const Text(
+                  "OK",
+                ),
               ),
             ],
           );
@@ -295,7 +309,9 @@ class _BiddingPageState extends State<BiddingPage> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 10.h),
+            SizedBox(
+              height: 10.h,
+            ),
             TextField(
               controller: bidController,
               keyboardType: TextInputType.number,
@@ -308,7 +324,9 @@ class _BiddingPageState extends State<BiddingPage> {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(
+              height: 20.h,
+            ),
             // Submit Button
             Center(
               child: ElevatedButton(
