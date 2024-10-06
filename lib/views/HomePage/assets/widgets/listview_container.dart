@@ -1,16 +1,21 @@
+import 'dart:developer';
+
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:minor_project/helper/fcm_helper.dart';
 import 'package:minor_project/model/famous_data_model.dart';
 import 'package:minor_project/model/hots_data_model.dart';
 import 'package:minor_project/model/house_holds_data_model.dart';
 import 'package:minor_project/views/DetailPage/detail_page.dart';
+import 'package:toastification/toastification.dart';
 
 List<dynamic> favouriteItems = [];
 
 // Method for the HouseHold List View Container
 GestureDetector houseListViewContainer({
   required HouseHoldsDataModel e,
+  required Function() setState,
 }) {
   bool isFavorited = favouriteItems.contains(e);
 
@@ -29,8 +34,17 @@ GestureDetector houseListViewContainer({
         ),
         _buildAddButton(
           isFavorited: isFavorited,
-          onTap: () {
-            _addItemToFavourites(e);
+          onTap: () async {
+            isFavorited = !isFavorited;
+            setState();
+
+            log("Favorite : $isFavorited");
+
+            await FCMHelper.fcmHelper
+                .addFavoriteHouseHolds(data: e)
+                .then((value) {
+              debugPrint('Item added to the favourites list.');
+            });
           },
         ),
       ],
@@ -41,6 +55,7 @@ GestureDetector houseListViewContainer({
 // Method for the Hot List View Container
 GestureDetector hotListViewContainer({
   required HotsDataModel e,
+  required Function() setState,
 }) {
   bool isFavorited =
       favouriteItems.contains(e); // Check if the item is already in favorites
@@ -60,8 +75,13 @@ GestureDetector hotListViewContainer({
         ),
         _buildAddButton(
           isFavorited: isFavorited,
-          onTap: () {
-            _addItemToFavourites(e);
+          onTap: () async {
+            isFavorited = !isFavorited;
+            setState();
+            log("Favorite : $isFavorited");
+            await FCMHelper.fcmHelper.addFavoriteHouse(data: e).then((value) {
+              debugPrint('Item added to the favourites list.');
+            });
           },
         ),
       ],
@@ -72,6 +92,7 @@ GestureDetector hotListViewContainer({
 // Method for the Famous List View Container
 GestureDetector famousListViewContainer({
   required FamousDataModel e,
+  required Function() setState,
 }) {
   bool isFavorited =
       favouriteItems.contains(e); // Check if the item is already in favorites
@@ -91,8 +112,13 @@ GestureDetector famousListViewContainer({
         ),
         _buildAddButton(
           isFavorited: isFavorited,
-          onTap: () {
-            _addItemToFavourites(e);
+          onTap: () async {
+            isFavorited = !isFavorited;
+            setState();
+            log("Favorite : $isFavorited");
+            await FCMHelper.fcmHelper.addFavoriteFamous(data: e).then((value) {
+              debugPrint('Item added to the favourites list.');
+            });
           },
         ),
       ],
@@ -258,15 +284,4 @@ void _navigateToFamousDetailPage({
     animation: FlexifyRouteAnimations.blur,
     animationDuration: Durations.medium1,
   );
-}
-
-// Method to add item to shared favourites list
-void _addItemToFavourites(dynamic item) {
-  if (favouriteItems.contains(item)) {
-    favouriteItems.remove(item);
-    debugPrint('Item removed from the favourites list.');
-  } else {
-    favouriteItems.add(item);
-    debugPrint('Item added to the favourites list.');
-  }
 }

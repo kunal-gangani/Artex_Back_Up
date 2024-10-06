@@ -30,4 +30,16 @@ class FamousDataModel {
       minBidPrice: data['minBidPrice'],
     );
   }
+
+   Map<String, dynamic> toMap() {
+    return {
+      'artId': artId,
+      'artName': artName,
+      'imageUrl': imageUrl,
+      'painter': painter,
+      'origin': origin,
+      'description': description,
+      'minBidPrice': minBidPrice,
+    };
+  }
 }

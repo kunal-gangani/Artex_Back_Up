@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,8 +12,8 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   // Variables to hold user information
-  String userName = "John Doe";
-  String email = "john.doe@example.com";
+  String userName = "abc";
+  String email = "abc@gmail.com";
   String bio = "Art lover and collector.";
   String imagePath = "";
 

@@ -192,7 +192,9 @@ class _BiddingPageState extends State<BiddingPage> {
         title: Text(widget.artName),
         backgroundColor: Colors.blueAccent,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+          ),
           onPressed: () => Flexify.back(),
         ),
         actions: [
@@ -204,13 +206,18 @@ class _BiddingPageState extends State<BiddingPage> {
                   context: context,
                   type: ToastificationType.success,
                   title: const Text('Bid Saved'),
-                  description:
-                      const Text('Your bid has been saved successfully.'),
+                  description: const Text(
+                    'Your bid has been saved successfully.',
+                  ),
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
-                  autoCloseDuration: const Duration(seconds: 5),
+                  autoCloseDuration: const Duration(
+                    seconds: 5,
+                  ),
                 );
-                Flexify.goRemoveAll(const HomePage());
+                Flexify.goRemoveAll(
+                  const HomePage(),
+                );
               },
               icon: const Icon(
                 Icons.save,
@@ -221,7 +228,10 @@ class _BiddingPageState extends State<BiddingPage> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 20,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
         style: TextStyle(
           fontSize: 20.sp,
           color: Colors.white,
+          fontWeight: FontWeight.bold,
         ),
       ),
       actions: [
@@ -101,6 +102,7 @@ class _HomePageState extends State<HomePage> {
         "Bids Placed",
         style: TextStyle(
           color: Colors.white,
+          fontWeight: FontWeight.bold,
         ),
       ),
       backgroundColor: Colors.blueAccent,
@@ -120,6 +122,7 @@ class _HomePageState extends State<HomePage> {
         "User Profile",
         style: TextStyle(
           color: Colors.white,
+          fontWeight: FontWeight.bold,
         ),
       ),
       backgroundColor: Colors.blueAccent,

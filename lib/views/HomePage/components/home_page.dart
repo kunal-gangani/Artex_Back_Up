@@ -86,18 +86,18 @@ class _HomePageComponentState extends State<HomePageComponent> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        bottom: 20,
-                        left: 20,
-                        child: Text(
-                          'Image ${index + 1}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   bottom: 20,
+                      //   left: 20,
+                      //   child: Text(
+                      //     'Image ${index + 1}',
+                      //     style: const TextStyle(
+                      //       color: Colors.white,
+                      //       fontSize: 16,
+                      //       fontWeight: FontWeight.w600,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 );
@@ -153,6 +153,9 @@ class _HomePageComponentState extends State<HomePageComponent> {
                   HotsDataModel item = hots[index];
                   return hotListViewContainer(
                     e: item,
+                    setState: () {
+                      setState(() {});
+                    },
                   );
                 },
               ),
@@ -179,8 +182,10 @@ class _HomePageComponentState extends State<HomePageComponent> {
                 itemBuilder: (context, index) {
                   final item = famous[index];
                   return famousListViewContainer(
-                    e: item,
-                  );
+                      e: item,
+                      setState: () {
+                        setState(() {});
+                      });
                 },
               ),
             ),
@@ -210,6 +215,9 @@ class _HomePageComponentState extends State<HomePageComponent> {
                   HouseHoldsDataModel item = households[index];
                   return houseListViewContainer(
                     e: item,
+                    setState: () {
+                      setState(() {});
+                    },
                   );
                 },
               ),
