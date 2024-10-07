@@ -6,6 +6,7 @@ class HotsDataModel {
   String origin;
   String description;
   int minBidPrice;
+  int stock;
 
   HotsDataModel({
     required this.artId,
@@ -15,6 +16,7 @@ class HotsDataModel {
     required this.origin,
     required this.description,
     required this.minBidPrice,
+    required this.stock,
   });
 
   factory HotsDataModel.toMap({required Map data}) {
@@ -26,6 +28,7 @@ class HotsDataModel {
       origin: data['origin'],
       description: data['description'],
       minBidPrice: data['minBidPrice'],
+      stock: data['stock'],
     );
   }
 
@@ -38,6 +41,7 @@ class HotsDataModel {
       'origin': origin,
       'description': description,
       'minBidPrice': minBidPrice,
+      'stock': stock,
     };
   }
 }

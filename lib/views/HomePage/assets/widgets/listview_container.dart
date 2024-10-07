@@ -8,7 +8,6 @@ import 'package:minor_project/model/famous_data_model.dart';
 import 'package:minor_project/model/hots_data_model.dart';
 import 'package:minor_project/model/house_holds_data_model.dart';
 import 'package:minor_project/views/DetailPage/detail_page.dart';
-import 'package:toastification/toastification.dart';
 
 List<dynamic> favouriteItems = [];
 
@@ -31,6 +30,7 @@ GestureDetector houseListViewContainer({
           imageUrl: e.imageUrl,
           title: e.artName,
           price: e.minBidPrice.toDouble(),
+          stock: e.stock,
         ),
         _buildAddButton(
           isFavorited: isFavorited,
@@ -43,7 +43,9 @@ GestureDetector houseListViewContainer({
             await FCMHelper.fcmHelper
                 .addFavoriteHouseHolds(data: e)
                 .then((value) {
-              debugPrint('Item added to the favourites list.');
+              debugPrint(
+                'Item added to the favourites list.',
+              );
             });
           },
         ),
@@ -63,7 +65,7 @@ GestureDetector hotListViewContainer({
   return GestureDetector(
     onTap: () {
       _navigateToHotsDetailPage(
-        house: e,
+        hots: e,
       );
     },
     child: Stack(
@@ -72,6 +74,7 @@ GestureDetector hotListViewContainer({
           imageUrl: e.imageUrl,
           title: e.artName,
           price: e.minBidPrice.toDouble(),
+          stock: e.stock,
         ),
         _buildAddButton(
           isFavorited: isFavorited,
@@ -100,7 +103,7 @@ GestureDetector famousListViewContainer({
   return GestureDetector(
     onTap: () {
       _navigateToFamousDetailPage(
-        house: e,
+        famous: e,
       );
     },
     child: Stack(
@@ -109,6 +112,7 @@ GestureDetector famousListViewContainer({
           imageUrl: e.imageUrl,
           title: e.artName,
           price: e.minBidPrice.toDouble(),
+          stock: e.stock,
         ),
         _buildAddButton(
           isFavorited: isFavorited,
@@ -130,6 +134,7 @@ Widget _buildItemContainer({
   required String imageUrl,
   required String title,
   required double price,
+  required int stock,
 }) {
   return Container(
     width: 170.w,
@@ -255,15 +260,15 @@ void _navigateToHouseDetailPage({
 }
 
 void _navigateToHotsDetailPage({
-  required HotsDataModel house,
+  required HotsDataModel hots,
 }) {
   Flexify.go(
     DetailPage(
-      artName: house.artName,
-      imageUrl: house.imageUrl,
-      painter: house.painter,
-      description: house.description,
-      minBidPrice: house.minBidPrice.toDouble(),
+      artName: hots.artName,
+      imageUrl: hots.imageUrl,
+      painter: hots.painter,
+      description: hots.description,
+      minBidPrice: hots.minBidPrice.toDouble(),
     ),
     animation: FlexifyRouteAnimations.blur,
     animationDuration: Durations.medium1,
@@ -271,15 +276,15 @@ void _navigateToHotsDetailPage({
 }
 
 void _navigateToFamousDetailPage({
-  required FamousDataModel house,
+  required FamousDataModel famous,
 }) {
   Flexify.go(
     DetailPage(
-      artName: house.artName,
-      imageUrl: house.imageUrl,
-      painter: house.painter,
-      description: house.description,
-      minBidPrice: house.minBidPrice.toDouble(),
+      artName: famous.artName,
+      imageUrl: famous.imageUrl,
+      painter: famous.painter,
+      description: famous.description,
+      minBidPrice: famous.minBidPrice.toDouble(),
     ),
     animation: FlexifyRouteAnimations.blur,
     animationDuration: Durations.medium1,

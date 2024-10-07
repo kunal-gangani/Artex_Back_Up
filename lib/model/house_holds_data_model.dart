@@ -6,6 +6,7 @@ class HouseHoldsDataModel {
   String origin;
   String description;
   int minBidPrice;
+  int stock;
 
   HouseHoldsDataModel({
     required this.artId,
@@ -15,6 +16,7 @@ class HouseHoldsDataModel {
     required this.origin,
     required this.description,
     required this.minBidPrice,
+    required this.stock,
   });
 
   factory HouseHoldsDataModel.toMap({required Map data}) {
@@ -26,6 +28,7 @@ class HouseHoldsDataModel {
       origin: data['origin'],
       description: data['description'],
       minBidPrice: data['minBidPrice'],
+      stock: data['stock'],
     );
   }
 
@@ -38,6 +41,7 @@ class HouseHoldsDataModel {
       'origin': origin,
       'description': description,
       'minBidPrice': minBidPrice,
+      'stock': stock,
     };
   }
 }

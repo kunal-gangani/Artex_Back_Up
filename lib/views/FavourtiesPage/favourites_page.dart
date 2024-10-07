@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:minor_project/helper/auth_helper.dart';
 import 'package:minor_project/helper/fcm_helper.dart';
-import 'package:minor_project/views/HomePage/assets/widgets/listview_container.dart';
 
 class FavouritesPage extends StatefulWidget {
   const FavouritesPage({super.key});
@@ -43,7 +42,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
           stream: FCMHelper.fcmHelper.fetchAllFavoriteItems(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Center(
+              return const Center(
                 child: Text(
                   "Error",
                 ),
@@ -61,17 +60,21 @@ class _FavouritesPageState extends State<FavouritesPage> {
                   itemCount: allData.length,
                   itemBuilder: (context, index) {
                     return Slidable(
-                      key: ValueKey(allData[index]),
+                      key: ValueKey(
+                        allData[index],
+                      ),
                       startActionPane: ActionPane(
                         motion: const ScrollMotion(),
                         children: [
                           SlidableAction(
-                            onPressed: (context) =>
-                                _removeItem(allData[index]['artId']),
+                            onPressed: (context) => _removeItem(
+                              allData[index]['artId'],
+                            ),
                             backgroundColor: Colors.red,
                             foregroundColor: Colors.white,
                             icon: Icons.delete,
                             label: 'Delete',
+                            borderRadius: BorderRadius.circular(25),
                           ),
                         ],
                       ),

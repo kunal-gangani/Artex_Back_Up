@@ -6,6 +6,7 @@ class FamousDataModel {
   String origin;
   String description;
   int minBidPrice;
+  int stock;
 
   FamousDataModel({
     required this.artId,
@@ -15,6 +16,7 @@ class FamousDataModel {
     required this.origin,
     required this.description,
     required this.minBidPrice,
+    required this.stock,
   });
 
   factory FamousDataModel.toMap({
@@ -28,10 +30,11 @@ class FamousDataModel {
       origin: data['origin'],
       description: data['description'],
       minBidPrice: data['minBidPrice'],
+      stock: data['stock'],
     );
   }
 
-   Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'artId': artId,
       'artName': artName,
@@ -40,6 +43,7 @@ class FamousDataModel {
       'origin': origin,
       'description': description,
       'minBidPrice': minBidPrice,
+      'stock': stock,
     };
   }
 }

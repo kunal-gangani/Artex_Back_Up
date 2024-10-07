@@ -26,6 +26,7 @@ List<Map<String, dynamic>> artFamousList = [
         "rating": 4,
       },
     ],
+    "stock": 5,
   },
   {
     "artId": 2,
@@ -51,6 +52,7 @@ List<Map<String, dynamic>> artFamousList = [
         "rating": 3,
       },
     ],
+    "stock": 6,
   },
   {
     "artId": 3,
@@ -69,7 +71,8 @@ List<Map<String, dynamic>> artFamousList = [
         "review": "Perfect for my living room!",
         "rating": 5
       }
-    ]
+    ],
+    "stock": 4,
   },
   {
     "artId": 4,
@@ -88,7 +91,8 @@ List<Map<String, dynamic>> artFamousList = [
         "rating": 5
       },
       {"reviewId": 7, "userId": 1007, "review": "Amazing piece!", "rating": 4}
-    ]
+    ],
+    "stock": 2,
   },
   {
     "artId": 5,
@@ -106,7 +110,8 @@ List<Map<String, dynamic>> artFamousList = [
         "review": "Brings a sense of calm.",
         "rating": 5
       }
-    ]
+    ],
+    "stock": 7,
   },
 ];
 
@@ -133,7 +138,8 @@ List<Map<String, dynamic>> artHotsList = [
         "review": "It feels like a warm summer day!",
         "rating": 5
       }
-    ]
+    ],
+    "stock": 10,
   },
   {
     "artId": 2,
@@ -151,8 +157,9 @@ List<Map<String, dynamic>> artHotsList = [
         "userId": 1010,
         "review": "Powerful and energetic!",
         "rating": 5
-      }
-    ]
+      },
+    ],
+    "stock": 11,
   },
   {
     "artId": 3,
@@ -170,8 +177,9 @@ List<Map<String, dynamic>> artHotsList = [
         "userId": 1011,
         "review": "The colors of fall are so well captured!",
         "rating": 5
-      }
-    ]
+      },
+    ],
+    "stock": 8,
   },
   {
     "artId": 4,
@@ -188,8 +196,9 @@ List<Map<String, dynamic>> artHotsList = [
         "userId": 1012,
         "review": "Mysterious and beautiful.",
         "rating": 4
-      }
-    ]
+      },
+    ],
+    "stock": 5,
   },
   {
     "artId": 5,
@@ -207,8 +216,9 @@ List<Map<String, dynamic>> artHotsList = [
         "userId": 1013,
         "review": "A dreamlike experience.",
         "rating": 5
-      }
-    ]
+      },
+    ],
+    "stock": 17,
   },
 ];
 
@@ -236,8 +246,9 @@ List<Map<String, dynamic>> artHouseHoldsList = [
         "userId": 1014,
         "review": "Quiet and meditative.",
         "rating": 5
-      }
-    ]
+      },
+    ],
+    "stock": 21,
   },
   {
     "artId": 2,
@@ -254,8 +265,9 @@ List<Map<String, dynamic>> artHouseHoldsList = [
         "userId": 1015,
         "review": "The colors are incredible!",
         "rating": 5
-      }
-    ]
+      },
+    ],
+    "stock": 18,
   },
   {
     "artId": 3,
@@ -272,8 +284,9 @@ List<Map<String, dynamic>> artHouseHoldsList = [
         "userId": 1016,
         "review": "So relaxing to look at.",
         "rating": 5
-      }
-    ]
+      },
+    ],
+    "stock": 9,
   },
   {
     "artId": 4,
@@ -290,8 +303,9 @@ List<Map<String, dynamic>> artHouseHoldsList = [
         "userId": 1017,
         "review": "Feels like you're there.",
         "rating": 5
-      }
-    ]
+      },
+    ],
+    "stock": 16,
   },
   {
     "artId": 5,
@@ -317,6 +331,7 @@ List<Map<String, dynamic>> artHouseHoldsList = [
         "rating": 4
       },
     ],
+    "stock": 26,
   },
 ];
 
@@ -327,4 +342,3 @@ List households = artHouseHoldsList
       ),
     )
     .toList();
-
