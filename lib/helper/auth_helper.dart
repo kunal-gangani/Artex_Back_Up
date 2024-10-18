@@ -74,6 +74,7 @@ class AuthHelper {
       codeAutoRetrievalTimeout: (verificationId) {},
     );
   }
+
   Future<Map<String, dynamic>> checkMyOTP({required String otp}) async {
     Map<String, dynamic> res = {};
     try {
@@ -81,7 +82,7 @@ class AuthHelper {
           verificationId: verificationMyId, smsCode: otp);
 
       UserCredential userCredential =
-      await auth.signInWithCredential(credential);
+          await auth.signInWithCredential(credential);
       User? user = userCredential.user;
       res['user'] = user;
     } catch (e) {
@@ -90,5 +91,9 @@ class AuthHelper {
     }
 
     return res;
+  }
+
+  Future<void> logOut() async {
+    await auth.signOut();
   }
 }

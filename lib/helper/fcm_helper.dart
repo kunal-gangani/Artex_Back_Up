@@ -53,4 +53,12 @@ class FCMHelper {
         .collection("favorite")
         .snapshots();
   }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> fetchCurrentUserData() async {
+    return await firestore
+        .collection("User Data")
+        .doc(AuthHelper.authHelper.auth.currentUser!.email)
+        .get();
+  }
+
 }

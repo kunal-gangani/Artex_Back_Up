@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:minor_project/globals/art_data.dart';
 import 'package:minor_project/views/HomePage/home_page.dart';
 import 'package:toastification/toastification.dart';
 import 'package:minor_project/globals/bids_placed_list.dart';
@@ -10,12 +12,14 @@ class BiddingPage extends StatefulWidget {
   final String artName;
   final String imageUrl;
   final int currentHighestBid;
+  final int index;
 
   const BiddingPage({
     super.key,
     required this.artName,
     required this.imageUrl,
     required this.currentHighestBid,
+    required this.index,
   });
 
   @override
@@ -66,6 +70,11 @@ class _BiddingPageState extends State<BiddingPage> {
 
       String bidStatus = 'unconfirmed';
 
+      log("========================");
+      log("CurrentBid : ${widget.currentHighestBid}");
+      log("UserBid : $userBid");
+      log("========================");
+
       if (userBid > widget.currentHighestBid) {
         canSave = true;
         bidSubmitted = true;
@@ -81,6 +90,12 @@ class _BiddingPageState extends State<BiddingPage> {
           'date': DateTime.now().toString(),
           'imageUrl': widget.imageUrl,
         });
+
+        log("==========================");
+        log("Min Bid Price : ${artHotsList[widget.index]['minBidPrice']}\nUSER BID : $userBid");
+        log("==========================");
+
+        artHotsList[widget.index]['minBidPrice'] = userBid;
 
         // Display success toast
         toastification.show(
@@ -164,7 +179,9 @@ class _BiddingPageState extends State<BiddingPage> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
-                Flexify.goRemoveAll(const HomePage()); // Navigate to homepage
+                Flexify.goRemoveAll(
+                  const HomePage(),
+                ); // Navigate to homepage
               },
               child: const Text(
                 "OK",
@@ -260,9 +277,11 @@ class _BiddingPageState extends State<BiddingPage> {
                 ),
               ],
             ),
-            SizedBox(height: 20.h),
+            SizedBox(
+              height: 20.h,
+            ),
             Text(
-              "Current Highest Bid: ₹${widget.currentHighestBid}",
+              "Current Highest Bid: \$${widget.currentHighestBid}",
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,

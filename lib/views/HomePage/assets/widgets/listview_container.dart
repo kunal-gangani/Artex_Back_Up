@@ -15,6 +15,7 @@ List<dynamic> favouriteItems = [];
 GestureDetector houseListViewContainer({
   required HouseHoldsDataModel e,
   required Function() setState,
+  required int index,
 }) {
   bool isFavorited = false;
 
@@ -22,6 +23,7 @@ GestureDetector houseListViewContainer({
     onTap: () {
       _navigateToHouseDetailPage(
         house: e,
+        index: index,
       );
     },
     child: Stack(
@@ -71,6 +73,7 @@ GestureDetector houseListViewContainer({
 GestureDetector hotListViewContainer({
   required HotsDataModel e,
   required Function() setState,
+  required int index,
 }) {
   bool isFavorited = false;
 
@@ -78,6 +81,7 @@ GestureDetector hotListViewContainer({
     onTap: () {
       _navigateToHotsDetailPage(
         hots: e,
+        index: index,
       );
     },
     child: Stack(
@@ -121,6 +125,7 @@ GestureDetector hotListViewContainer({
 GestureDetector famousListViewContainer({
   required FamousDataModel e,
   required Function() setState,
+  required int index,
 }) {
   bool isFavorited = false;
 
@@ -128,6 +133,7 @@ GestureDetector famousListViewContainer({
     onTap: () {
       _navigateToFamousDetailPage(
         famous: e,
+        index: index,
       );
     },
     child: Stack(
@@ -284,6 +290,7 @@ Widget _buildAddButton({
 // Navigation function to Detail Page
 void _navigateToHouseDetailPage({
   required HouseHoldsDataModel house,
+  required int index,
 }) {
   Flexify.go(
     DetailPage(
@@ -292,6 +299,7 @@ void _navigateToHouseDetailPage({
       painter: house.painter,
       description: house.description,
       minBidPrice: house.minBidPrice.toDouble(),
+      index: index,
     ),
     animation: FlexifyRouteAnimations.blur,
     animationDuration: Durations.medium1,
@@ -300,6 +308,7 @@ void _navigateToHouseDetailPage({
 
 void _navigateToHotsDetailPage({
   required HotsDataModel hots,
+  required int index,
 }) {
   Flexify.go(
     DetailPage(
@@ -308,6 +317,7 @@ void _navigateToHotsDetailPage({
       painter: hots.painter,
       description: hots.description,
       minBidPrice: hots.minBidPrice.toDouble(),
+      index: index,
     ),
     animation: FlexifyRouteAnimations.blur,
     animationDuration: Durations.medium1,
@@ -316,6 +326,7 @@ void _navigateToHotsDetailPage({
 
 void _navigateToFamousDetailPage({
   required FamousDataModel famous,
+  required int index,
 }) {
   Flexify.go(
     DetailPage(
@@ -324,6 +335,7 @@ void _navigateToFamousDetailPage({
       painter: famous.painter,
       description: famous.description,
       minBidPrice: famous.minBidPrice.toDouble(),
+      index: index,
     ),
     animation: FlexifyRouteAnimations.blur,
     animationDuration: Durations.medium1,

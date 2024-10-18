@@ -140,6 +140,7 @@ class _HomePageComponentState extends State<HomePageComponent> {
                     setState: () {
                       setState(() {});
                     },
+                    index: index,
                   );
                 },
               ),
@@ -166,10 +167,12 @@ class _HomePageComponentState extends State<HomePageComponent> {
                 itemBuilder: (context, index) {
                   final item = famous[index];
                   return famousListViewContainer(
-                      e: item,
-                      setState: () {
-                        setState(() {});
-                      });
+                    e: item,
+                    setState: () {
+                      setState(() {});
+                    },
+                    index: index,
+                  );
                 },
               ),
             ),
@@ -202,6 +205,7 @@ class _HomePageComponentState extends State<HomePageComponent> {
                     setState: () {
                       setState(() {});
                     },
+                    index: index,
                   );
                 },
               ),

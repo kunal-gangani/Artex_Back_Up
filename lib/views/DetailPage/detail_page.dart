@@ -9,6 +9,7 @@ class DetailPage extends StatelessWidget {
   final String imageUrl;
   final String description;
   final double minBidPrice;
+  final int index;
 
   const DetailPage({
     super.key,
@@ -17,9 +18,10 @@ class DetailPage extends StatelessWidget {
     required this.imageUrl,
     required this.description,
     required this.minBidPrice,
+    required this.index,
   });
 
-  void _onPlaceYourBidButtonPressed() {
+  void _onPlaceYourBidButtonPressed({required int index}) {
     // Assuming you have access to these values:
     String artName = this.artName;
     String imageUrl = this.imageUrl;
@@ -30,6 +32,7 @@ class DetailPage extends StatelessWidget {
         artName: artName,
         imageUrl: imageUrl,
         currentHighestBid: currentHighestBid,
+        index: index,
       ),
       animation: FlexifyRouteAnimations.blur,
       animationDuration: Durations.medium1,
@@ -182,17 +185,7 @@ class DetailPage extends StatelessWidget {
               width: double.infinity,
               height: 60.h,
               child: ElevatedButton(
-                onPressed: () {
-                  Flexify.go(
-                    BiddingPage(
-                      artName: artName,
-                      imageUrl: imageUrl,
-                      currentHighestBid: minBidPrice.toInt(),
-                    ),
-                    animation: FlexifyRouteAnimations.blur,
-                    animationDuration: Durations.medium1,
-                  );
-                },
+                onPressed: () => _onPlaceYourBidButtonPressed(index: index),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue.shade400,
                   shape: RoundedRectangleBorder(
