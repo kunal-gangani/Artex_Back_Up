@@ -2,18 +2,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 import 'firebase_options.dart';
 import 'package:minor_project/views/SplashScreen/splash_screen.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(
-    const MyApp(),
+    const ToastificationWrapper(
+      child: MyApp(),
+    ),
   );
 }
 
@@ -29,7 +31,10 @@ class MyApp extends StatelessWidget {
         size.height,
       ),
       minTextAdapt: true,
-      builder: (context, _) {
+      builder: (
+        context,
+        _,
+      ) {
         return Flexify(
           designWidth: size.width,
           designHeight: size.height,

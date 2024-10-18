@@ -71,6 +71,36 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
+  // Function to handle user logout
+  void handleLogout() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Logout'),
+        content: const Text(
+            'Do you really wish to log out of your account? This action will end your current session.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(), // Cancel action
+            child: const Text('Dismiss'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Implement your logout functionality here.
+              Navigator.of(context).pop(); // Close the dialog
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    content: Text("You have been logged out successfully.")),
+              );
+              // Additional logout logic can be added here if needed, such as redirecting to the login screen.
+            },
+            child: const Text('Log Out'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +117,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   child: CircleAvatar(
                     radius: 50.w,
                     backgroundImage: imagePath.isNotEmpty
-                        ? FileImage(File(imagePath))
+                        ? FileImage(
+                            File(
+                              imagePath,
+                            ),
+                          )
                         : const AssetImage(
                             'assets/default_avatar.jpg',
                           ) as ImageProvider,
@@ -161,36 +195,64 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        if (isEditing) {
-                          saveProfile(); // Save profile if in editing mode
-                        } else {
-                          isEditing = true; // Enable editing mode
-                        }
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 12.h,
-                        horizontal: 24.w,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (isEditing) {
+                            saveProfile(); // Save profile if in editing mode
+                          } else {
+                            isEditing = true; // Enable editing mode
+                          }
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12.h,
+                          horizontal: 24.w,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.r),
+                        ),
+                        backgroundColor: Colors.blueAccent,
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.r),
+                      child: Text(
+                        isEditing ? "Save Details" : "Edit Profile",
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.white,
+                        ),
                       ),
-                      backgroundColor: Colors.blueAccent,
                     ),
-                    child: Text(
-                      isEditing ? "Save Details" : "Edit Profile",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.white,
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    ElevatedButton(
+                      onPressed: handleLogout, // Call the logout function
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12.h,
+                          horizontal: 24.w,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.r),
+                        ),
+                        backgroundColor: Colors.redAccent,
+                      ),
+                      child: Text(
+                        "Log Out",
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
+
+                // Log Out button
               ],
             ),
           ),

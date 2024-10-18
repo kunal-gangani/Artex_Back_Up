@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:minor_project/helper/auth_helper.dart';
 import 'package:minor_project/model/user_data_model.dart';
+import 'package:minor_project/views/HomePage/home_page.dart';
 import 'package:minor_project/views/LoginPage/login_page.dart';
 import 'package:minor_project/views/OTPVerificationPage/otp_verification_page.dart';
 
@@ -252,10 +253,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               )
                                   .then((value) {
                                 Flexify.goRemove(
-                                  OTPVerificationPage(
-                                    phoneNumber: _phoneController.text,
-                                    countryCode: "+91",
-                                  ),
+                                  const HomePage(),
                                   animation: FlexifyRouteAnimations.blur,
                                   duration: Durations.medium1,
                                 );

@@ -1,13 +1,9 @@
-import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
-import 'package:minor_project/views/BidsPlacedPage/bids_placed.dart';
 import 'package:minor_project/model/house_holds_data_model.dart';
 import 'package:minor_project/globals/art_data.dart';
 import 'package:minor_project/model/hots_data_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:minor_project/views/ReviewsPage/reviews_page.dart';
-import 'package:minor_project/views/UserProfilePage/user_profile_page.dart';
 
 import '../assets/widgets/listview_container.dart';
 
@@ -86,18 +82,6 @@ class _HomePageComponentState extends State<HomePageComponent> {
                           ),
                         ),
                       ),
-                      // Positioned(
-                      //   bottom: 20,
-                      //   left: 20,
-                      //   child: Text(
-                      //     'Image ${index + 1}',
-                      //     style: const TextStyle(
-                      //       color: Colors.white,
-                      //       fontSize: 16,
-                      //       fontWeight: FontWeight.w600,
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 );
@@ -114,7 +98,7 @@ class _HomePageComponentState extends State<HomePageComponent> {
                 enableInfiniteScroll: true,
                 enlargeStrategy: CenterPageEnlargeStrategy.scale,
                 autoPlayInterval: const Duration(
-                  seconds: 3,
+                  seconds: 2,
                 ),
                 scrollPhysics: const BouncingScrollPhysics(),
                 onPageChanged: (

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +7,7 @@ import 'package:minor_project/model/famous_data_model.dart';
 import 'package:minor_project/model/hots_data_model.dart';
 import 'package:minor_project/model/house_holds_data_model.dart';
 import 'package:minor_project/views/DetailPage/detail_page.dart';
+import 'package:toastification/toastification.dart';
 
 List<dynamic> favouriteItems = [];
 
@@ -16,7 +16,7 @@ GestureDetector houseListViewContainer({
   required HouseHoldsDataModel e,
   required Function() setState,
 }) {
-  bool isFavorited = favouriteItems.contains(e);
+  bool isFavorited = false;
 
   return GestureDetector(
     onTap: () {
@@ -46,6 +46,19 @@ GestureDetector houseListViewContainer({
               debugPrint(
                 'Item added to the favourites list.',
               );
+              toastification.show(
+                backgroundColor: isFavorited ? Colors.red[50] : Colors.blue[50],
+                autoCloseDuration: const Duration(
+                  seconds: 2,
+                ),
+                title: isFavorited
+                    ? const Text(
+                        "Added to Favourites ",
+                      )
+                    : const Text(
+                        "Removed from Favourites",
+                      ),
+              );
             });
           },
         ),
@@ -59,8 +72,7 @@ GestureDetector hotListViewContainer({
   required HotsDataModel e,
   required Function() setState,
 }) {
-  bool isFavorited =
-      favouriteItems.contains(e); // Check if the item is already in favorites
+  bool isFavorited = false;
 
   return GestureDetector(
     onTap: () {
@@ -85,6 +97,19 @@ GestureDetector hotListViewContainer({
             await FCMHelper.fcmHelper.addFavoriteHouse(data: e).then((value) {
               debugPrint('Item added to the favourites list.');
             });
+            toastification.show(
+              backgroundColor: isFavorited ? Colors.red[50] : Colors.blue[50],
+              autoCloseDuration: const Duration(
+                seconds: 2,
+              ),
+              title: isFavorited
+                  ? const Text(
+                      "Added to Favourites ",
+                    )
+                  : const Text(
+                      "Removed from Favourites",
+                    ),
+            );
           },
         ),
       ],
@@ -97,8 +122,7 @@ GestureDetector famousListViewContainer({
   required FamousDataModel e,
   required Function() setState,
 }) {
-  bool isFavorited =
-      favouriteItems.contains(e); // Check if the item is already in favorites
+  bool isFavorited = false;
 
   return GestureDetector(
     onTap: () {
@@ -119,10 +143,25 @@ GestureDetector famousListViewContainer({
           onTap: () async {
             isFavorited = !isFavorited;
             setState();
-            log("Favorite : $isFavorited");
+            log(
+              "Favorite : $isFavorited",
+            );
             await FCMHelper.fcmHelper.addFavoriteFamous(data: e).then((value) {
               debugPrint('Item added to the favourites list.');
             });
+            toastification.show(
+              backgroundColor: isFavorited ? Colors.red[50] : Colors.blue[50],
+              autoCloseDuration: const Duration(
+                seconds: 2,
+              ),
+              title: isFavorited
+                  ? const Text(
+                      "Added to Favourites ",
+                    )
+                  : const Text(
+                      "Removed from Favourites",
+                    ),
+            );
           },
         ),
       ],
